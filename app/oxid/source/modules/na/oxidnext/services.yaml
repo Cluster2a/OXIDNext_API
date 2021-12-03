@@ -1,0 +1,13 @@
+services:
+    _defaults:
+        public: false
+        autowire: true
+
+    NetAdvising\OxidNext\GraphQL\:
+        resource: 'GraphQL/*'
+        exclude: 'GraphQL/**/{DataType,Exception,Shop,Event}'
+        public: true
+
+    NetAdvising\OxidNext\GraphQL\Shared\Service\NamespaceMapper:
+        class: NetAdvising\OxidNext\GraphQL\Shared\Service\NamespaceMapper
+        tags: ['graphql_namespace_mapper']

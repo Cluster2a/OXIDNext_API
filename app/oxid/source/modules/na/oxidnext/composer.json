@@ -1,0 +1,23 @@
+{
+    "name": "netadvising/oxidnext",
+    "description": "",
+    "type": "netadvising-module",
+    "version": "v1.0.1",
+    "keywords": [
+        "oxid",
+        "modules",
+        "eShop",
+        "GraphQL"
+    ],
+    "license": [
+        "GPL-3.0"
+    ],
+    "require": {
+        "php": "^7.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "NetAdvising\\OxidNext\\":"../../../source/modules/na/oxidnext"
+        }
+    }
+}

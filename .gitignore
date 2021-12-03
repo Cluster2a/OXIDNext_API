@@ -48,8 +48,6 @@ node_modules/
 /app/oxid/source/Application/*
 !/app/oxid/source/Application/views/
 /app/oxid/source/Application/views/*
-!/app/oxid/source/Application/views/otto-fischer
-/app/oxid/source/Application/views/otto-fischer/node_modules/*
 
 # languages
 !/app/oxid/source/Application/translations/
@@ -60,20 +58,6 @@ node_modules/
 # out
 !/app/oxid/source/out
 /app/oxid/source/out/*
-!/app/oxid/source/out/otto-fischer
-!/app/oxid/source/out/perfion2oxid
-
-# exclude grunt stuff
-/app/oxid/source/out/otto-fischer/src/fonts/
-/app/oxid/source/out/otto-fischer/src/js/libs/jquery.cookie.min.js
-/app/oxid/source/out/otto-fischer/src/js/libs/photoswipe.min.js
-/app/oxid/source/out/otto-fischer/src/js/libs/photoswipe-ui-default.min.js
-/app/oxid/source/out/otto-fischer/src/js/script.min.js
-/app/oxid/source/out/otto-fischer/src/js/script.min.js.map
-/app/oxid/source/out/otto-fischer/src/js/scriptPages.min.js
-/app/oxid/source/out/otto-fischer/src/js/scriptPages.min.js.map
-/app/oxid/source/out/otto-fischer/src/css/styles.css
-/app/oxid/source/out/otto-fischer/src/css/styles.min.css
 
 # grunt
 !/app/oxid/source/Gruntfile.coffee
@@ -85,17 +69,5 @@ node_modules/
 !/app/oxid/source/modules/
 /app/oxid/source/modules/*
 /app/oxid/source/modules/functions.php
-!/app/oxid/source/modules/esy/
-/app/oxid/source/modules/esy/perfion2oxid
-/app/oxid/source/modules/esy/*/vendor/
-!/app/oxid/source/modules/ith_modules/
-/app/oxid/source/modules/ith_modules/*/vendor/
-!/app/oxid/source/modules/cnc/
-/app/oxid/source/modules/cnc/*/node_modules/
-!/app/oxid/source/modules/ddr/
-/app/oxid/source/modules/ddr/*/vendor/
-/app/oxid/source/modules/esy/kombitool/node_modules
-/app/oxid/source/modules/esy/objectmanagement/node_modules/
-/app/oxid/source/modules/esy/*/node_modules/
-!/app/oxid/source/modules/makaira/
-/app/oxid/source/modules/makaira/*/vendor/
+!/app/oxid/source/modules/na/
+/app/oxid/source/modules/na/*/vendor/
