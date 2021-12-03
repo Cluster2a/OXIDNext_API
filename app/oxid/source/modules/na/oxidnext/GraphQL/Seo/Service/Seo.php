@@ -20,6 +20,7 @@ use NetAdvising\OxidNext\GraphQL\Seo\DataType\Common as CommonDataType;
 use NetAdvising\OxidNext\GraphQL\Seo\Infrastructure\SeoRepository;
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Application\Model\Category;
+use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\GraphQL\Storefront\Product\DataType\Product as ProductDataType;
 use OxidEsales\GraphQL\Storefront\Category\DataType\Category as CategoryDataType;
 
@@ -43,10 +44,18 @@ final class Seo
     {
         $seoObject = $this->seoRepository->getSeoByUrl($url);
 
+        $langId = $seoObject['oxlang'];
+        if(empty($langId) === true) {
+            $langId = 0;
+        }
+
+        $languageService = Registry::getLang();
+        $languageService->setBaseLanguage($langId);
+
         switch ($seoObject['oxtype']) {
             case 'oxarticle':
                 $article = oxNew(Article::class);
-                $article->load($seoObject['oxobjectid']);
+                $article->loadInLang($langId, $seoObject['oxobjectid']);
 
                 $articleDataType = new ProductDataType($article);
 
@@ -59,7 +68,7 @@ final class Seo
                 );
             case 'oxcategory':
                 $category = oxNew(Category::class);
-                $category->load($seoObject['oxobjectid']);
+                $category->loadInLang($langId, $seoObject['oxobjectid']);
 
                 $categoryDataType = new CategoryDataType($category);
 

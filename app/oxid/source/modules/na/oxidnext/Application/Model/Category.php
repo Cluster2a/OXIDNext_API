@@ -43,12 +43,37 @@ class Category extends Category_parent
     /**
      * Returns raw category seo url
      *
-     * @param int $iLang language id
+     * @param ?int $iLang language id
      * @return string
      */
-    public function getBaseSeoShortLink(int $iLang): string
+    public function getBaseSeoShortLink(?int $iLang = null): string
     {
+        if($iLang === null) {
+            $languageService = Registry::getLang();
+            $iLang = $languageService->getBaseLanguage();
+        }
         $oEncoder = Registry::get(SeoEncoderCategory::class);
         return $oEncoder->getCategoryUri($this, $iLang);
+    }
+
+    /**
+     * Returns category thumbnail picture url if exist, false - if not
+     *
+     * @return mixed
+     */
+    public function getThumbUrl()
+    {
+        $sIcon = $this->oxcategories__oxthumb->value;
+
+        if(empty($sIcon) === true) {
+            $parentcategory = oxNew(\OxidEsales\Eshop\Application\Model\Category::class);
+            $parentcategory->load($this->oxcategories__oxrootid->value);
+            $sIcon = $parentcategory->oxcategories__oxthumb->value;
+        }
+
+        if (empty($sIcon) !== true) {
+            $sSize = Registry::getConfig()->getConfigParam('sCatThumbnailsize');
+            return Registry::getPictureHandler()->getPicUrl("category/thumb/", $sIcon, $sSize);
+        }
     }
 }

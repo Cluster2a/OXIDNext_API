@@ -47,7 +47,6 @@ class SeoRepository
                 'url' => $url
             ]);
 
-        $t =$queryBuilder->getSQL();
         return $queryBuilder->execute()->fetch();
     }
 }
