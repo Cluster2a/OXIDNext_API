@@ -1,0 +1,101 @@
+.idea
+mariadb_data
+.ide-helper.php
+.phpstorm.meta.php
+.DS_Store
+node_modules/
+
+# exclude vendoe
+/app/oxid/vendor/
+
+# exclude composer.lock
+/app/oxid/composer.lock
+
+# exclude var folder
+/app/oxid/var/*
+
+# include specific source folders
+!/app/oxid/source/
+/app/oxid/source/*
+!/app/oxid/source/check.html
+
+# metapackages
+!/app/oxid/metapackages
+
+# include patches
+!/app/oxid/patches
+
+# ignore node modules
+node_modules/
+
+# include crons
+!/app/oxid/source/bin/
+/app/oxid/source/bin/*
+!/app/oxid/source/bin/cron_*.php
+
+!/app/oxid/source/.htaccess
+!/app/oxid/source/config.inc.php
+/app/oxid/oxid.lock
+
+# migration
+!/app/oxid/source/migration/
+/app/oxid/source/migration/*
+!/app/oxid/source/migration/project_data/
+!/app/oxid/source/migration/project_migrations.yml
+
+# theme
+!/app/oxid/source/Application/
+/app/oxid/source/Application/*
+!/app/oxid/source/Application/views/
+/app/oxid/source/Application/views/*
+!/app/oxid/source/Application/views/otto-fischer
+/app/oxid/source/Application/views/otto-fischer/node_modules/*
+
+# languages
+!/app/oxid/source/Application/translations/
+/app/oxid/source/Application/translations/*
+!/app/oxid/source/Application/translations/fr/
+!/app/oxid/source/Application/translations/it/
+
+# out
+!/app/oxid/source/out
+/app/oxid/source/out/*
+!/app/oxid/source/out/otto-fischer
+!/app/oxid/source/out/perfion2oxid
+
+# exclude grunt stuff
+/app/oxid/source/out/otto-fischer/src/fonts/
+/app/oxid/source/out/otto-fischer/src/js/libs/jquery.cookie.min.js
+/app/oxid/source/out/otto-fischer/src/js/libs/photoswipe.min.js
+/app/oxid/source/out/otto-fischer/src/js/libs/photoswipe-ui-default.min.js
+/app/oxid/source/out/otto-fischer/src/js/script.min.js
+/app/oxid/source/out/otto-fischer/src/js/script.min.js.map
+/app/oxid/source/out/otto-fischer/src/js/scriptPages.min.js
+/app/oxid/source/out/otto-fischer/src/js/scriptPages.min.js.map
+/app/oxid/source/out/otto-fischer/src/css/styles.css
+/app/oxid/source/out/otto-fischer/src/css/styles.min.css
+
+# grunt
+!/app/oxid/source/Gruntfile.coffee
+!/app/oxid/source/package.json
+!/app/oxid/source/package-lock.json
+!/app/oxid/source/grunt/
+
+# modules
+!/app/oxid/source/modules/
+/app/oxid/source/modules/*
+/app/oxid/source/modules/functions.php
+!/app/oxid/source/modules/esy/
+/app/oxid/source/modules/esy/perfion2oxid
+/app/oxid/source/modules/esy/*/vendor/
+!/app/oxid/source/modules/ith_modules/
+/app/oxid/source/modules/ith_modules/*/vendor/
+!/app/oxid/source/modules/cnc/
+/app/oxid/source/modules/cnc/*/node_modules/
+!/app/oxid/source/modules/ddr/
+/app/oxid/source/modules/ddr/*/vendor/
+/app/oxid/source/modules/esy/kombitool/node_modules
+/app/oxid/source/modules/esy/objectmanagement/node_modules/
+/app/oxid/source/modules/esy/*/node_modules/
+!/app/oxid/source/modules/makaira/
+/app/oxid/source/modules/makaira/*/vendor/

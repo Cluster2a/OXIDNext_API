@@ -1,0 +1,125 @@
+version: "3.7"
+
+services:
+    #######################################
+    # Apache server
+    #######################################
+    apache-oxidnext-development:
+        container_name: apache-oxidnext-development
+        build:
+            context: ./docker/oxid/development/apache/
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        volumes:
+            - ./app/oxid:/app
+            - ./docker/oxid/development/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf:ro
+        depends_on:
+            - php-fpm-oxidnext-development
+            - mysql-oxidnext-development
+        networks:
+            - internal
+            - proxy
+        links:
+            - php-fpm-oxidnext-development
+            - mysql-oxidnext-development
+        env_file:
+            - ./docker/oxid/development/etc/environment.env
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.apache-oxidnext-development.entrypoints=http"
+            - "traefik.http.routers.apache-oxidnext-development.rule=Host(`graphql.oxidnext.localhost.local`)"
+            - "traefik.http.routers.apache-oxidnext-development.tls=false"
+            - "traefik.docker.network=proxy"
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "5m"
+
+    #######################################
+    # PHP FPM
+    #######################################
+    php-fpm-oxidnext-development:
+        container_name: php-fpm-oxidnext-development
+        build:
+            context: ./docker/oxid/development/php-fpm/
+            dockerfile: Dockerfile
+        volumes:
+            - ./app/oxid:/app
+            - ./docker/oxid/development/php-fpm/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+            - ./database/database.sql:/tmp/database.sql
+        depends_on:
+            - mysql-oxidnext-development
+        command: /usr/local/bin/waitforit -address=tcp://mysql-oxidnext-development:3306 -timeout=20 -- php-fpm
+        env_file:
+            - ./docker/oxid/development/etc/environment.env
+        networks:
+            - proxy
+        links:
+            - mysql-oxidnext-development
+            - redis-oxidnext-development
+        extra_hosts:
+            - "oxidnext.localhost.local:127.0.0.1"
+        labels:
+            - "traefik.enable=false"
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "5m"
+
+    ########################################
+    ## redis caching
+    ########################################
+    redis-oxidnext-development:
+        container_name: redis-oxidnext-development
+        image: "redis:alpine"
+        command: redis-server
+        volumes:
+            - oxidnext-redis-data:/var/lib/redis
+            - ./docker/oxid/development/redis/:/usr/local/etc/redis/
+        environment:
+            - REDIS_REPLICATION_MODE=master
+        labels:
+            - "traefik.enable=false"
+        networks:
+            - internal
+            - proxy
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "5m"
+
+    #######################################
+    # MySQL server
+    #######################################
+    mysql-oxidnext-development:
+        container_name: mysql-oxidnext-development
+        build:
+            context: docker/oxid/development/mysql/
+            dockerfile: Dockerfile
+        command: mysqld --sql_mode="" --max_allowed_packet=16777216
+        restart: unless-stopped
+        volumes:
+            - oxidnext-mysql-data:/var/lib/mysql
+        env_file:
+            - ./docker/oxid/development/etc/environment.env
+        labels:
+            - traefik.enable=false
+        networks:
+            - proxy
+            - internal
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "5m"
+
+networks:
+    proxy:
+        external: true
+    internal:
+        external: false
+
+volumes:
+    oxidnext-mysql-data:
+        driver: local
+    oxidnext-redis-data:
+        driver: local
