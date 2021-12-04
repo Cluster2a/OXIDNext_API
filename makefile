@@ -26,8 +26,8 @@ ide_helper:
 	docker exec -it $(env) /bin/sh -c "/app/vendor/bin/oe-eshop-ide_helper"
 
 clear-cache:
-	docker exec -it $(env) /bin/sh -c "rm -r /app/source/tmp/*"
-	docker exec -it $(env) /bin/sh -c "rm -r /app/source/cache/*"
+	docker exec -it $(env) /bin/sh -c "rm -r /app/source/tmp/* && mkdir /app/source/tmp/ && chmod 777 -R /app/source/tmp/"
+	docker exec -it $(env) /bin/sh -c "rm -r /app/source/cache/* && mkdir /app/source/cache/ && chmod 777 -R /app/source/cache/"
 
 composer-update:
 	docker exec -it $(env) /bin/sh -c 'cd /app/ && composer update'

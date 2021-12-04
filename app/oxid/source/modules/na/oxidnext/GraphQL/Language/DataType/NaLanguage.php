@@ -29,15 +29,15 @@ final class NaLanguage
     /** @var bool */
     public bool $selected;
 
-    /** @var string */
-    public string $url;
+    /** @var ?string */
+    public ?string $url;
 
     public function __construct(
         int $id,
         string $name,
         string $abbr,
         bool $selected,
-        string $url
+        ?string $url
     ) {
         $this->id   = $id;
         $this->name = $name;
@@ -81,7 +81,7 @@ final class NaLanguage
     /**
      * @Field()
      */
-    public function getUrl(): string
+    public function getUrl(): ?string
     {
         return $this->url;
     }

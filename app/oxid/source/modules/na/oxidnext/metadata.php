@@ -29,7 +29,8 @@ $aModule = [
     'url'         => '',
     'email'       => '',
     'extend'      => [
-        \OxidEsales\Eshop\Application\Model\Category::class => \NetAdvising\OxidNext\Application\Model\Category::class
+        \OxidEsales\Eshop\Application\Model\Category::class => \NetAdvising\OxidNext\Application\Model\Category::class,
+        \OxidEsales\Eshop\Application\Model\Article::class => \NetAdvising\OxidNext\Application\Model\Article::class
     ],
     'controllers' => [],
     'templates'   => [],
