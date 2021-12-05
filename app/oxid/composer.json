@@ -6,9 +6,9 @@
     "GPL-3.0-only"
   ],
   "repositories": {
-    "esyon": {
-      "type": "composer",
-      "url": "https:\/\/satis.stage.cloud1.esyon.net"
+    "netadvising": {
+      "type": "path",
+      "url": "source/modules/na/*"
     }
   },
   "minimum-stability": "dev",
@@ -16,8 +16,7 @@
     "oxid-esales/oxideshop-metapackage-ce": "dev-b-7.0",
     "oxid-esales/graphql-base": "dev-master",
     "oxid-esales/graphql-storefront": "dev-master",
-    "netadvising/oxidnext":"v1.0.1",
-    "esyon/perfion2oxid": "1.0.4"
+    "netadvising/oxidnext":"v1.0.1"
   },
   "require-dev": {
     "incenteev/composer-parameter-handler": "^v2.1.4",

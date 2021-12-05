@@ -49,5 +49,8 @@ console-module-install:
 	&& echo "Installing module /app/source/modules/$${MODULEFOLDER}" \
 	&& docker exec -it $(env) /bin/sh -c "/app/vendor/bin/oe-console oe:module:install /app/source/modules/$${MODULEFOLDER}"
 
+console-module-install-oxid-next:
+	docker exec -it $(env) /bin/sh -c "/app/vendor/bin/oe-console oe:module:install /app/source/modules/na/oxidnext"
+
 console-apply-configuration:
 	docker exec -it $(env) /bin/sh -c "/app/vendor/bin/oe-console oe:module:apply-configuration && chmod 777 -R /app/var"

@@ -31,4 +31,13 @@ final class CategoryExtendType
     {
         return $category->getEshopModel()->getBaseSeoShortLink();
     }
+
+    /**
+     * @Field()
+     */
+    public function getPreviewImage(Category $category): string
+    {
+        return $category->getEshopModel()->getPreviewImage();
+    }
+
 }

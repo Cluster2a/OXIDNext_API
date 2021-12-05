@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OX>
+<OXMENU id="NAVIGATION_ESHOPADMIN">
+    <MAINMENU id="mxmanageprod">
+        <SUBMENU id="mxcategories" cl="category" list="category_list">
+            <TAB id="NA_OXIDNEXT_ADMIN_CATEGORY_NAV" cl="na_oxidnext_admin_category_storefront" />
+        </SUBMENU>
+    </MAINMENU>
+</OXMENU>
+</OX>

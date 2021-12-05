@@ -1,0 +1,4 @@
+name: Storefront module migration (na/oxidnext)
+migrations_namespace: NetAdvising\OxidNext\Migrations
+table_name: oxmigrations_storefront
+migrations_directory: data

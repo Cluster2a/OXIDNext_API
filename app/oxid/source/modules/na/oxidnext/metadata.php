@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This Software is the property of ESYON and is protected by copyright law - it is NOT Freeware.
+ * This Software is the property of netAdvising and is protected by copyright law - it is NOT Freeware.
  * Any unauthorized use of this software without a valid license is a violation of the license agreement and will be
  * prosecuted by civil and criminal law.
  *
@@ -14,6 +14,9 @@
 /**
  * Metadata version
  */
+
+use NetAdvising\OxidNext\Application\Controller\Admin\CategoryStorefront;
+
 $sMetadataVersion = '2.0';
 
 /**
@@ -30,10 +33,15 @@ $aModule = [
     'email'       => '',
     'extend'      => [
         \OxidEsales\Eshop\Application\Model\Category::class => \NetAdvising\OxidNext\Application\Model\Category::class,
-        \OxidEsales\Eshop\Application\Model\Article::class => \NetAdvising\OxidNext\Application\Model\Article::class
+        \OxidEsales\Eshop\Application\Model\Article::class => \NetAdvising\OxidNext\Application\Model\Article::class,
     ],
-    'controllers' => [],
-    'templates'   => [],
-    'blocks'      => [],
+    'controllers' => [
+        'na_oxidnext_admin_category_storefront' => CategoryStorefront::class,
+    ],
+    'templates'   => [
+        'category_storefront.tpl' => 'Application/views/admin/tpl/category_storefront.tpl',
+    ],
+    'blocks'      => [
+    ],
     'settings'    => [],
 ];

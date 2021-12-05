@@ -75,5 +75,22 @@ class Category extends Category_parent
             $sSize = Registry::getConfig()->getConfigParam('sCatThumbnailsize');
             return Registry::getPictureHandler()->getPicUrl("category/thumb/", $sIcon, $sSize);
         }
+
+        return "";
+    }
+
+    /**
+     * Returns category thumbnail picture url if exist, false - if not
+     *
+     * @return bool|string|void|null
+     */
+    public function getPreviewImage()
+    {
+        if (($preview = $this->oxcategories__na_sf_banner->value)) {
+            $sSize = '1094*730';
+            return Registry::getPictureHandler()->getPicUrl("category/na_sf_banner/", $preview, $sSize);
+        }
+
+        return "";
     }
 }
