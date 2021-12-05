@@ -1,5 +1,5 @@
 <?php
-ini_set('memory_limit', '-1');
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.

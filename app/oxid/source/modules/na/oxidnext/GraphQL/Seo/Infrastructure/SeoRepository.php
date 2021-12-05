@@ -37,7 +37,7 @@ class SeoRepository
         $queryBuilder = $this->queryBuilderFactory->create();
 
         $queryBuilder
-            ->select(['oxtype', 'oxobjectid', 'oxlang', 'oxparams'])
+            ->select(['oxtype', 'oxobjectid', 'oxlang', 'oxparams', 'oxstdurl'])
             ->from('oxseo')
             ->where($queryBuilder->expr()->or(
                 $queryBuilder->expr()->eq('oxseo.oxseourl', ':url'),

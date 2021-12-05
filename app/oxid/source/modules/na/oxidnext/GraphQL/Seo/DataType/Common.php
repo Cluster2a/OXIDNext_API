@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace NetAdvising\OxidNext\GraphQL\Seo\DataType;
 
+use NetAdvising\OxidNext\GraphQL\Seo\DataType\BreadCrumbs as BreadCrumbsDataType;
 use OxidEsales\GraphQL\Storefront\Category\DataType\Category;
 use OxidEsales\GraphQL\Storefront\Product\DataType\Product;
 use TheCodingMachine\GraphQLite\Annotations\Field;
@@ -50,18 +51,25 @@ final class Common
      */
     private ?Category $category;
 
+    /**
+     * @var BreadCrumbsDataType[]
+     */
+    private array $breadCrumbs;
+
     public function __construct(
         string $type,
         string $objectid,
         int $lang,
         ?Product $article,
-        ?Category $category
+        ?Category $category,
+        array $breadCrumbs
     ) {
         $this->type     = $type;
         $this->objectid = $objectid;
         $this->lang     = $lang;
         $this->article = $article;
         $this->category = $category;
+        $this->breadCrumbs = $breadCrumbs;
     }
 
     /**
@@ -102,5 +110,14 @@ final class Common
     public function getCategory(): ? Category
     {
         return $this->category;
+    }
+
+    /**
+     * @Field()
+     * @return BreadCrumbsDataType[]
+     */
+    public function getBredcrumbs(): array
+    {
+        return $this->breadCrumbs;
     }
 }

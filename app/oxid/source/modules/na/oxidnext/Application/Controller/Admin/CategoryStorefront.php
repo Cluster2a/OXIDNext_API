@@ -71,18 +71,30 @@ class CategoryStorefront extends  AdminDetailsController
     {
         parent::save();
 
-        $aParams = $this->parseRequestParametersForSave(
-            Registry::getRequest()->getRequestParameter('editval')
-        );
+        $oxId = $this->getEditObjectId();
+        $params = Registry::getRequest()->getRequestEscapedParameter("editval");
 
-        $category = oxNew(Category::class);;
+        $category = oxNew(\OxidEsales\Eshop\Application\Model\Category::class);
+        $catLang = Registry::getRequest()->getRequestEscapedParameter("catlang");
+        $catLang = $catLang ? $catLang : 0;
+
+        if ($oxId != "-1") {
+            $category->loadInLang($catLang, $oxId);
+        } else {
+            $params['oxcategories__oxid'] = null;
+        }
 
         //Disable editing for derived items
         if ($category->isDerived()) {
             return;
         }
 
-        $category->oxcategories__na_sf_banner = new Field($aParams['oxcategories__na_sf_banner']);
+
+        $category->setLanguage(0);
+        $category->assign($params);
+        $category->setLanguage($catLang);
+
+        $category = $this->updateCategoryOnSave($category, $params);
 
         $category->save();
 

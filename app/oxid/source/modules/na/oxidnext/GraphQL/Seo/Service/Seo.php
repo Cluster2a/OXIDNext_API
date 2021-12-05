@@ -17,22 +17,56 @@ namespace NetAdvising\OxidNext\GraphQL\Seo\Service;
 
 use Doctrine\DBAL\Exception;
 use NetAdvising\OxidNext\GraphQL\Seo\DataType\Common as CommonDataType;
+use NetAdvising\OxidNext\GraphQL\Seo\DataType\BreadCrumbs as BreadCrumbsDataType;
 use NetAdvising\OxidNext\GraphQL\Seo\Infrastructure\SeoRepository;
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Application\Model\Category;
+use OxidEsales\Eshop\Core\Exception\RoutingException;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\GraphQL\Storefront\Product\DataType\Product as ProductDataType;
 use OxidEsales\GraphQL\Storefront\Category\DataType\Category as CategoryDataType;
 
+
+
+/**
+ *
+ */
 final class Seo
 {
     /** @var SeoRepository */
     private SeoRepository $seoRepository;
 
+    /**
+     * @param SeoRepository $seoRepository
+     */
     public function __construct(
         SeoRepository $seoRepository
     ) {
         $this->seoRepository = $seoRepository;
+    }
+
+    /**
+     * @param string $qry
+     * @return array|false
+     */
+    private function queryToArray(string $qry)
+    {
+        $result = array();
+        if (strpos($qry,'=')) {
+            if (strpos($qry,'?')!==false) {
+                $q = parse_url($qry);
+                $qry = $q['query'];
+            }
+        } else {
+            return false;
+        }
+
+        foreach (explode('&', $qry) as $couple) {
+            list ($key, $val) = explode('=', $couple);
+            $result[$key] = $val;
+        }
+
+        return empty($result) ? false : $result;
     }
 
     /**
@@ -43,6 +77,30 @@ final class Seo
     public function getObjectByUrl(string $url): CommonDataType
     {
         $seoObject = $this->seoRepository->getSeoByUrl($url);
+
+        $urlQuery = $this->queryToArray(html_entity_decode($seoObject['oxstdurl']));
+        foreach($urlQuery as $key => $value) {
+            $_GET[$key] = $value;
+        }
+        $classKey = $urlQuery['cl'];
+        $function = $urlQuery['fc'];
+
+        try {
+            $resolvedClass = Registry::getControllerClassNameResolver()->getClassNameById($classKey);
+            $view = oxNew($resolvedClass);
+            $view->setClassKey($classKey);
+            $view->setFncName($function);
+            $view->init();
+
+            $breadCrumbs = $view->getBreadCrumb();
+        } catch (RoutingException $exception) {
+            $breadCrumbs = [];
+        }
+
+        $breadCrumbDataType = [];
+        foreach ($breadCrumbs as $breadCrumb) {
+            $breadCrumbDataType[] = new BreadCrumbsDataType($breadCrumb['link'], $breadCrumb['title']);
+        }
 
         $langId = $seoObject['oxlang'];
         if(empty($langId) === true) {
@@ -64,7 +122,8 @@ final class Seo
                     $seoObject['oxobjectid'],
                     (int) $seoObject['oxlang'],
                     $articleDataType,
-                    null
+                    null,
+                    $breadCrumbDataType
                 );
             case 'oxcategory':
                 $category = oxNew(Category::class);
@@ -77,7 +136,8 @@ final class Seo
                     $seoObject['oxobjectid'],
                     (int) $seoObject['oxlang'],
                     null,
-                    $categoryDataType
+                    $categoryDataType,
+                    $breadCrumbDataType
                 );
             case 'oxcontent':
             case 'dynamic':
@@ -87,7 +147,8 @@ final class Seo
                     $seoObject['oxobjectid'],
                     (int) $seoObject['oxlang'],
                     null,
-                    null
+                    null,
+                    $breadCrumbDataType
                 );
 
         }
