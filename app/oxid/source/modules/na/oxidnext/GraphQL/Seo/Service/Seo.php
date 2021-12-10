@@ -19,14 +19,13 @@ use Doctrine\DBAL\Exception;
 use NetAdvising\OxidNext\GraphQL\Seo\DataType\Common as CommonDataType;
 use NetAdvising\OxidNext\GraphQL\Seo\DataType\BreadCrumbs as BreadCrumbsDataType;
 use NetAdvising\OxidNext\GraphQL\Seo\Infrastructure\SeoRepository;
+use OxidEsales\Eshop\Application\Component\Locator;
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Application\Model\Category;
 use OxidEsales\Eshop\Core\Exception\RoutingException;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\GraphQL\Storefront\Product\DataType\Product as ProductDataType;
 use OxidEsales\GraphQL\Storefront\Category\DataType\Category as CategoryDataType;
-
-
 
 /**
  *
@@ -78,6 +77,12 @@ final class Seo
     {
         $seoObject = $this->seoRepository->getSeoByUrl($url);
 
+        $langId = $seoObject['oxlang'];
+        if(empty($langId) === true) {
+            $langId = 0;
+        }
+
+
         $urlQuery = $this->queryToArray(html_entity_decode($seoObject['oxstdurl']));
         foreach($urlQuery as $key => $value) {
             $_GET[$key] = $value;
@@ -92,20 +97,24 @@ final class Seo
             $view->setFncName($function);
             $view->init();
 
+            if($classKey === 'details') {
+                $article = $view->getProduct();
+                $locator = oxNew(Locator::class, $view->getListType());
+                $locator->setLocatorData($article, $view);
+            }
+
             $breadCrumbs = $view->getBreadCrumb();
         } catch (RoutingException $exception) {
             $breadCrumbs = [];
         }
 
         $breadCrumbDataType = [];
+        $shopUrl = Registry::getConfig()->getConfigParam("sShopURL");
         foreach ($breadCrumbs as $breadCrumb) {
-            $breadCrumbDataType[] = new BreadCrumbsDataType($breadCrumb['link'], $breadCrumb['title']);
+            $link = str_replace($shopUrl, "", $breadCrumb['link']);
+            $breadCrumbDataType[] = new BreadCrumbsDataType($link, $breadCrumb['title']);
         }
 
-        $langId = $seoObject['oxlang'];
-        if(empty($langId) === true) {
-            $langId = 0;
-        }
 
         $languageService = Registry::getLang();
         $languageService->setBaseLanguage($langId);

@@ -16,8 +16,12 @@ declare(strict_types=1);
 namespace NetAdvising\OxidNext\Application\Model;
 
 use OxidEsales\Eshop\Application\Model\SeoEncoderArticle;
+use OxidEsales\Eshop\Core\Price;
 use OxidEsales\Eshop\Core\Registry;
 
+/**
+ * extension of aricle model
+ */
 class Article extends Article_parent
 {
     /**
@@ -38,6 +42,45 @@ class Article extends Article_parent
         }
 
         return $this->_aSeoUrls[$iLang];
+    }
+
+    /**
+     * returns formatted price according to oxprice (smarty)
+     *
+     * @return string
+     */
+    public function getFormattedPrice(): string
+    {
+        $price = $this->getPrice();
+        $currency = Registry::getConfig()->getActShopCurrencyObject();
+
+        $output = '';
+        $decimals = 2;
+        $decimalsSeparator = ',';
+        $thousandSeparator = '.';
+        $currencySign = '';
+        $side = '';
+
+        $price = $price->getPrice();
+
+        if (!is_null($currency)) {
+            $decimalsSeparator = $currency->dec ?? $decimalsSeparator;
+            $thousandSeparator = $currency->thousand ?? $thousandSeparator;
+            $currencySign = $currency->sign ?? $currencySign;
+            $side = $currency->side ?? $side;
+            $decimals = isset($currency->decimal) ? (int) $currency->decimal : $decimals;
+        }
+
+        if (is_numeric($price)) {
+            if ((float) $price > 0) {
+                $sPrice = number_format($price, $decimals, $decimalsSeparator, $thousandSeparator);
+                $output = ($side == 'Front') ? $currencySign . $sPrice : $sPrice . ' ' . $currencySign;
+            }
+
+            $output = trim($output);
+        }
+
+        return $output;
     }
 
     /**
