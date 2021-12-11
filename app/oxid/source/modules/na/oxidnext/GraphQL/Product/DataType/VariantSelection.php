@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This Software is the property of ESYON and is protected by copyright law - it is NOT Freeware.
+ * This Software is the property of netAdvising and is protected by copyright law - it is NOT Freeware.
  * Any unauthorized use of this software without a valid license is a violation of the license agreement and will be
  * prosecuted by civil and criminal law.
  *
@@ -15,47 +15,48 @@ declare(strict_types=1);
 
 namespace NetAdvising\OxidNext\GraphQL\Product\DataType;
 
-use NetAdvising\OxidNext\GraphQL\Product\DataType\VariantSelectionList as VariantSelectionListDataType;
+use NetAdvising\OxidNext\GraphQL\Product\DataType\Variants as VariantsDataType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
 /**
  * @Type()
  */
-final class VariantSelection
+class VariantSelection
 {
     /**
-     * @var string
+     * @var VariantsDataType[]
      */
-    private string $label;
+    private array $variants;
 
     /**
-     * @var array
+     * @var ?string
      */
-    private array $list;
+    private ?string $selectedVariant;
 
     public function __construct(
-        string $label,
-        array $list
+        array $variants,
+        ?string $selectedVariant
     ) {
-        $this->label  = $label;
-        $this->list = $list;
+        $this->variants  = $variants;
+        $this->selectedVariant = $selectedVariant;
     }
 
     /**
      * @Field()
+     * @return VariantsDataType[]
      */
-    public function getLabel(): string
+    public function getVariants(): array
     {
-        return $this->label;
+        return $this->variants;
     }
 
     /**
      * @Field()
-     * @return VariantSelectionListDataType[]
+     * @return ?string
      */
-    public function getList(): array
+    public function getSelectedVariant(): ?string
     {
-        return $this->list;
+        return $this->selectedVariant;
     }
 }

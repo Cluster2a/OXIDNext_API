@@ -16,6 +16,8 @@ declare(strict_types=1);
 namespace NetAdvising\OxidNext\GraphQL\Seo\Controller;
 
 use Doctrine\DBAL\Exception;
+use NetAdvising\OxidNext\GraphQL\Product\DataType\SelectedVariants;
+use NetAdvising\OxidNext\GraphQL\Product\Service\ProductStorage;
 use NetAdvising\OxidNext\GraphQL\Seo\DataType\Common as CommonDataType;
 use NetAdvising\OxidNext\GraphQL\Seo\Service\Seo as SeoService;
 
@@ -28,10 +30,15 @@ final class Seo
      */
     private SeoService $seoService;
 
+    /** @var ProductStorage */
+    private ProductStorage $productStorage;
+
     public function __construct(
-        SeoService $seoService
+        SeoService $seoService,
+        ProductStorage $productStorage
     ) {
         $this->seoService = $seoService;
+        $this->productStorage = $productStorage;
     }
 
     /**
@@ -40,11 +47,16 @@ final class Seo
      * @Query
      *
      * @param string $url
+     * @param SelectedVariants[]|null $selectedVariants
      * @return CommonDataType
      * @throws Exception
      */
-    public function objectBySeoUrl(string $url): CommonDataType
+    public function objectBySeoUrl(
+        string $url,
+        ?array $selectedVariants = null
+    ): CommonDataType
     {
+        $this->productStorage->setVariantSelection($selectedVariants);
         $url = htmlspecialchars($url);
 
         if($url === '/' || empty($url) === true) {

@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace NetAdvising\OxidNext\Application\Model;
 
 use OxidEsales\Eshop\Application\Model\SeoEncoderArticle;
-use OxidEsales\Eshop\Core\Price;
 use OxidEsales\Eshop\Core\Registry;
 
 /**

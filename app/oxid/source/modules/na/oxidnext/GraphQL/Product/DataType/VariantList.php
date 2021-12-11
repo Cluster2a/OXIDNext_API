@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This Software is the property of ESYON and is protected by copyright law - it is NOT Freeware.
+ * This Software is the property of netAdvising and is protected by copyright law - it is NOT Freeware.
  * Any unauthorized use of this software without a valid license is a violation of the license agreement and will be
  * prosecuted by civil and criminal law.
  *
@@ -21,7 +21,7 @@ use TheCodingMachine\GraphQLite\Annotations\Type;
 /**
  * @Type()
  */
-final class VariantSelectionList
+final class VariantList
 {
     /**
      * @var string
@@ -71,7 +71,6 @@ final class VariantSelectionList
     {
         return $this->value;
     }
-
 
     /**
      * @Field()

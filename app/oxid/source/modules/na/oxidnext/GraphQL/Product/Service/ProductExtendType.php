@@ -16,9 +16,11 @@ declare(strict_types=1);
 namespace NetAdvising\OxidNext\GraphQL\Product\Service;
 
 use NetAdvising\OxidNext\GraphQL\Product\DataType\VariantSelection as VariantSelectionDataType;
-use NetAdvising\OxidNext\GraphQL\Product\DataType\VariantSelectionList as VariantSelectionListDataType;
+use NetAdvising\OxidNext\GraphQL\Product\DataType\Variants as VariantsDataType;
+use NetAdvising\OxidNext\GraphQL\Product\DataType\VariantList as VariantListDataType;
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\GraphQL\Storefront\Product\DataType\Product;
+
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 
@@ -27,6 +29,16 @@ use TheCodingMachine\GraphQLite\Annotations\ExtendType;
  */
 final class ProductExtendType
 {
+
+    /** @var ProductStorage */
+    private ProductStorage $productStorage;
+
+    public function __construct(
+        ProductStorage $productStorage
+    ) {
+        $this->productStorage = $productStorage;
+    }
+
     /**
      * @Field()
      */
@@ -53,19 +65,40 @@ final class ProductExtendType
 
     /**
      * @Field()
-     * @return VariantSelectionDataType[]
      */
-    public function getVariantSelections(Product $product): array
+    public function getIsBuyable(Product $product): bool
     {
+        return $product->getEshopModel()->isBuyable();
+    }
+
+    /**
+     * @Field()
+     */
+    public function getVarSelection(Product $product): string
+    {
+        return $product->getEshopModel()->oxarticles__oxvarselect->value;
+    }
+
+    /**
+     * @Field()
+     * @param Product $product
+     * @return VariantSelectionDataType
+     */
+    public function getVariantSelection(Product $product): VariantSelectionDataType
+    {
+        $variantSelections = $this->productStorage->getVariantSelection();
+        $currentUserSelection = [];
+        if(is_null($this->productStorage) !== true) {
+            foreach ($variantSelections as $variantSelection) {
+                $currentUserSelection[] = $variantSelection->getVariant();
+            }
+        }
+
         $productId = $product->getEshopModel()->getId();
 
         $article = oxNew(Article::class);
         $article->load($productId);
-        $variants = $article->getVariantSelections();
-
-        if (!is_iterable($variants) || count($variants) === 0) {
-            return [];
-        }
+        $variants = $article->getVariantSelections($currentUserSelection);
 
         $variantSelection = [];
 
@@ -73,23 +106,36 @@ final class ProductExtendType
             $list = [];
             $selections = $variant->getSelections();
             foreach ($selections as $selection) {
-                $list[] = new VariantSelectionListDataType(
+                $list[] = new VariantListDataType(
                     $selection->getName(),
                     $selection->getValue(),
                     $selection->isActive() === true,
                     $selection->isDisabled() === true
                 );
             }
-            $variantSelection[] = new VariantSelectionDataType(
+
+            $activeSelection = $variant->getActiveSelection();
+            if(is_null($activeSelection) !== true) {
+                $activeSelection = new VariantListDataType(
+                    $activeSelection->getName(),
+                    $activeSelection->getValue(),
+                    $activeSelection->isActive() === true,
+                    $activeSelection->isDisabled() === true
+                );
+            }
+
+            $variantSelection[] = new VariantsDataType(
                 $variant->getLabel(),
-                $list
+                $list,
+                $activeSelection
             );
-
-
         }
 
+        $productId = null;
+        if($variants['blPerfectFit']=== true) {
+            $productId = $variants['oActiveVariant']->getId();
+        }
 
-        return $variantSelection;
+        return new VariantSelectionDataType($variantSelection, $productId);
     }
-
 }

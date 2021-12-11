@@ -5,7 +5,7 @@ services:
 
     NetAdvising\OxidNext\GraphQL\:
         resource: 'GraphQL/*'
-        exclude: 'GraphQL/**/{DataType,Exception,Shop,Event}'
+        exclude: 'GraphQL/**/{DataType,Exception,Shop,Event,Subscriber}'
         public: true
 
     NetAdvising\OxidNext\GraphQL\Shared\Service\NamespaceMapper:
