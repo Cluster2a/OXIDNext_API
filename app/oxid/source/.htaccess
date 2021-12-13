@@ -3,6 +3,9 @@
     RewriteEngine On
     RewriteBase /
 
+    RewriteCond %{HTTP:Authorization} ^(.*)
+    RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+
     RewriteRule ^graphql/?$    widget.php?cl=graphql&skipSession=1   [QSA,NC,L]
 
     RewriteCond %{REQUEST_URI}     config\.inc\.php [NC]

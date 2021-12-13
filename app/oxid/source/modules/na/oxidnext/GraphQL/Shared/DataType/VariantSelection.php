@@ -13,9 +13,9 @@
 
 declare(strict_types=1);
 
-namespace NetAdvising\OxidNext\GraphQL\Product\DataType;
+namespace NetAdvising\OxidNext\GraphQL\Shared\DataType;
 
-use NetAdvising\OxidNext\GraphQL\Product\DataType\Variants as VariantsDataType;
+use NetAdvising\OxidNext\GraphQL\Shared\DataType\Variants as VariantsDataType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 

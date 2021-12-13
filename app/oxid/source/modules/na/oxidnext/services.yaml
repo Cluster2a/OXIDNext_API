@@ -11,3 +11,8 @@ services:
     NetAdvising\OxidNext\GraphQL\Shared\Service\NamespaceMapper:
         class: NetAdvising\OxidNext\GraphQL\Shared\Service\NamespaceMapper
         tags: ['graphql_namespace_mapper']
+
+    NetAdvising\OxidNext\GraphQL\Shared\Service\PermissionProvider:
+        class: NetAdvising\OxidNext\GraphQL\Shared\Service\PermissionProvider
+        tags: ['graphql_permission_provider']
+

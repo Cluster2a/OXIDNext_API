@@ -13,7 +13,7 @@
 
 declare(strict_types=1);
 
-namespace NetAdvising\OxidNext\GraphQL\Product\DataType;
+namespace NetAdvising\OxidNext\GraphQL\Shared\DataType;
 
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;

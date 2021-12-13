@@ -26,6 +26,7 @@ final class NamespaceMapper implements NamespaceMapperInterface
             '\\NetAdvising\\OxidNext\\GraphQL\\Seo\\Controller' => __DIR__ . '/../../Seo/Controller/',
             '\\NetAdvising\\OxidNext\\GraphQL\\Language\\Controller' => __DIR__ . '/../../Language/Controller/',
             '\\NetAdvising\\OxidNext\\GraphQL\\Product\\Controller' => __DIR__ . '/../../Product/Controller/',
+            '\\NetAdvising\\OxidNext\\GraphQL\\Variants\\Controller' => __DIR__ . '/../../Variants/Controller/',
         ];
     }
 
@@ -43,6 +44,12 @@ final class NamespaceMapper implements NamespaceMapperInterface
 
             '\\NetAdvising\\OxidNext\\GraphQL\\Seo\\Service' => __DIR__ . '/../../Seo/Service/',
             '\\NetAdvising\\OxidNext\\GraphQL\\Seo\\DataType' => __DIR__ . '/../../Seo/DataType/',
+
+            '\\NetAdvising\\OxidNext\\GraphQL\\Variants\\Service' => __DIR__ . '/../../Variants/Service/',
+            '\\NetAdvising\\OxidNext\\GraphQL\\Variants\\DataType' => __DIR__ . '/../../Variants/DataType/',
+
+            '\\NetAdvising\\OxidNext\\GraphQL\\Shared\\DataType' => __DIR__ . '/../../Shared/DataType/',
+            '\\NetAdvising\\OxidNext\\GraphQL\\Shared\\Service' => __DIR__ . '/../../Shared/Service/',
         ];
     }
 }

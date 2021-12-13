@@ -15,11 +15,11 @@ declare(strict_types=1);
 
 namespace NetAdvising\OxidNext\GraphQL\Product\Service;
 
-use NetAdvising\OxidNext\GraphQL\Product\DataType\VariantSelection as VariantSelectionDataType;
-use NetAdvising\OxidNext\GraphQL\Product\DataType\Variants as VariantsDataType;
-use NetAdvising\OxidNext\GraphQL\Product\DataType\VariantList as VariantListDataType;
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\GraphQL\Storefront\Product\DataType\Product;
+use NetAdvising\OxidNext\GraphQL\Shared\DataType\VariantSelection as VariantSelectionDataType;
+use NetAdvising\OxidNext\GraphQL\Shared\DataType\VariantList as VariantListDataType;
+use NetAdvising\OxidNext\GraphQL\Shared\DataType\Variants as VariantsDataType;
 
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
@@ -29,16 +29,6 @@ use TheCodingMachine\GraphQLite\Annotations\ExtendType;
  */
 final class ProductExtendType
 {
-
-    /** @var ProductStorage */
-    private ProductStorage $productStorage;
-
-    public function __construct(
-        ProductStorage $productStorage
-    ) {
-        $this->productStorage = $productStorage;
-    }
-
     /**
      * @Field()
      */
@@ -86,19 +76,11 @@ final class ProductExtendType
      */
     public function getVariantSelection(Product $product): VariantSelectionDataType
     {
-        $variantSelections = $this->productStorage->getVariantSelection();
-        $currentUserSelection = [];
-        if(is_null($this->productStorage) !== true) {
-            foreach ($variantSelections as $variantSelection) {
-                $currentUserSelection[] = $variantSelection->getVariant();
-            }
-        }
-
         $productId = $product->getEshopModel()->getId();
 
         $article = oxNew(Article::class);
         $article->load($productId);
-        $variants = $article->getVariantSelections($currentUserSelection);
+        $variants = $article->getVariantSelections();
 
         $variantSelection = [];
 

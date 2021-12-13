@@ -54,3 +54,6 @@ console-module-install-oxid-next:
 
 console-apply-configuration:
 	docker exec -it $(env) /bin/sh -c "/app/vendor/bin/oe-console oe:module:apply-configuration && chmod 777 -R /app/var"
+
+chmod-tmp:
+	docker exec -it $(env) /bin/sh -c "chmod 777 -R /app/source/tmp"
