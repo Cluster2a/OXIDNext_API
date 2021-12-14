@@ -35,10 +35,11 @@ class VariantSelection
     private ?string $selectedVariant;
 
     public function __construct(
-        array $variants,
+        array   $variants,
         ?string $selectedVariant
-    ) {
-        $this->variants  = $variants;
+    )
+    {
+        $this->variants = $variants;
         $this->selectedVariant = $selectedVariant;
     }
 

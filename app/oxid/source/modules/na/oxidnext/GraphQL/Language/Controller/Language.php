@@ -21,7 +21,8 @@ final class Language
 
     public function __construct(
         LanguageService $languageService
-    ) {
+    )
+    {
         $this->languageService = $languageService;
     }
 
@@ -35,10 +36,11 @@ final class Language
      * @return LanguageDataType[]
      * @throws Exception
      */
-    public function languages(int $langId, string $url): array {
+    public function languages(int $langId, string $url): array
+    {
         $url = htmlspecialchars($url);
 
-        if($url === '/' || empty($url) === true) {
+        if ($url === '/' || empty($url) === true) {
             $url = 'index.php?cl=start';
         }
 

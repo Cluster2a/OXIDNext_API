@@ -15,12 +15,10 @@ declare(strict_types=1);
 
 namespace NetAdvising\OxidNext\GraphQL\Category\Controller;
 
-use NetAdvising\OxidNext\GraphQL\Category\DataType\Category as CategoryDataType;
 use NetAdvising\OxidNext\GraphQL\Category\DataType\CategoryTree as CategoryTreeDataType;
-use OxidEsales\GraphQL\Storefront\Category\Service\Category as CategoryService;
 use NetAdvising\OxidNext\GraphQL\Category\Service\CategoryTree as CategoryTreeService;
+use OxidEsales\GraphQL\Storefront\Category\Service\Category as CategoryService;
 use TheCodingMachine\GraphQLite\Annotations\Query;
-
 /**
  *
  */
@@ -37,9 +35,10 @@ final class Category
      * @param CategoryTreeService $categoryTreeService
      */
     public function __construct(
-        CategoryService $categoryService,
+        CategoryService     $categoryService,
         CategoryTreeService $categoryTreeService
-    ) {
+    )
+    {
         $this->categoryService = $categoryService;
         $this->categoryTreeService = $categoryTreeService;
     }

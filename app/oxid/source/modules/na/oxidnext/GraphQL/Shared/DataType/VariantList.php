@@ -47,10 +47,11 @@ final class VariantList
     public function __construct(
         string $name,
         string $value,
-        bool $active,
-        bool $disabled
-    ) {
-        $this->name  = $name;
+        bool   $active,
+        bool   $disabled
+    )
+    {
+        $this->name = $name;
         $this->value = $value;
         $this->active = $active;
         $this->disabled = $disabled;

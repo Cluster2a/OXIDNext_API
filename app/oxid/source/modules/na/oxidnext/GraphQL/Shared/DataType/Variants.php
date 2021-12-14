@@ -40,11 +40,12 @@ final class Variants
     private ?VariantListDataType $activeSelection;
 
     public function __construct(
-        string $label,
-        array $list,
+        string               $label,
+        array                $list,
         ?VariantListDataType $activeSelection
-    ) {
-        $this->label  = $label;
+    )
+    {
+        $this->label = $label;
         $this->list = $list;
         $this->activeSelection = $activeSelection;
     }

@@ -23,25 +23,25 @@ $sMetadataVersion = '2.0';
  * Module information
  */
 $aModule = [
-    'id'          => 'na/oxidnext',
-    'title'       => 'netAdvising OxidNext',
-    'description' =>  '',
-    'thumbnail'   => '/out/pictures/logo.png',
-    'version'     => '0.0.1',
-    'author'      => 'NetAdvising',
-    'url'         => '',
-    'email'       => '',
-    'extend'      => [
+    'id' => 'na/oxidnext',
+    'title' => 'netAdvising OxidNext',
+    'description' => '',
+    'thumbnail' => '/out/pictures/logo.png',
+    'version' => '0.0.1',
+    'author' => 'NetAdvising',
+    'url' => '',
+    'email' => '',
+    'extend' => [
         \OxidEsales\Eshop\Application\Model\Category::class => \NetAdvising\OxidNext\Application\Model\Category::class,
         \OxidEsales\Eshop\Application\Model\Article::class => \NetAdvising\OxidNext\Application\Model\Article::class,
     ],
     'controllers' => [
         'na_oxidnext_admin_category_storefront' => CategoryStorefront::class,
     ],
-    'templates'   => [
+    'templates' => [
         'category_storefront.tpl' => 'Application/views/admin/tpl/category_storefront.tpl',
     ],
-    'blocks'      => [
+    'blocks' => [
     ],
-    'settings'    => [],
+    'settings' => [],
 ];

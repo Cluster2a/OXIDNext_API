@@ -36,8 +36,9 @@ final class CategorySubTree
         string $id,
         string $title,
         string $link
-    ) {
-        $this->id   = $id;
+    )
+    {
+        $this->id = $id;
         $this->title = $title;
         $this->link = $link;
     }

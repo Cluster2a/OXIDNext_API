@@ -67,11 +67,11 @@ class Article extends Article_parent
             $thousandSeparator = $currency->thousand ?? $thousandSeparator;
             $currencySign = $currency->sign ?? $currencySign;
             $side = $currency->side ?? $side;
-            $decimals = isset($currency->decimal) ? (int) $currency->decimal : $decimals;
+            $decimals = isset($currency->decimal) ? (int)$currency->decimal : $decimals;
         }
 
         if (is_numeric($price)) {
-            if ((float) $price > 0) {
+            if ((float)$price > 0) {
                 $sPrice = number_format($price, $decimals, $decimalsSeparator, $thousandSeparator);
                 $output = ($side == 'Front') ? $currencySign . $sPrice : $sPrice . ' ' . $currencySign;
             }
@@ -90,7 +90,7 @@ class Article extends Article_parent
      */
     public function getBaseSeoShortLink(?int $iLang = null): string
     {
-        if($iLang === null) {
+        if ($iLang === null) {
             $languageService = Registry::getLang();
             $iLang = $languageService->getBaseLanguage();
         }

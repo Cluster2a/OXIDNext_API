@@ -30,7 +30,8 @@ final class Seo
 
     public function __construct(
         SeoService $seoService
-    ) {
+    )
+    {
         $this->seoService = $seoService;
     }
 
@@ -49,7 +50,7 @@ final class Seo
     {
         $url = htmlspecialchars($url);
 
-        if($url === '/' || empty($url) === true) {
+        if ($url === '/' || empty($url) === true) {
             $url = 'index.php?cl=start';
         }
 

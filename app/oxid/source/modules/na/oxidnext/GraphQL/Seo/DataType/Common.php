@@ -57,16 +57,17 @@ final class Common
     private array $breadCrumbs;
 
     public function __construct(
-        string $type,
-        string $objectid,
-        int $lang,
-        ?Product $article,
+        string    $type,
+        string    $objectid,
+        int       $lang,
+        ?Product  $article,
         ?Category $category,
-        array $breadCrumbs
-    ) {
-        $this->type     = $type;
+        array     $breadCrumbs
+    )
+    {
+        $this->type = $type;
         $this->objectid = $objectid;
-        $this->lang     = $lang;
+        $this->lang = $lang;
         $this->article = $article;
         $this->category = $category;
         $this->breadCrumbs = $breadCrumbs;
@@ -99,7 +100,7 @@ final class Common
     /**
      * @Field()
      */
-    public function getArticle(): ? Product
+    public function getArticle(): ?Product
     {
         return $this->article;
     }
@@ -107,7 +108,7 @@ final class Common
     /**
      * @Field()
      */
-    public function getCategory(): ? Category
+    public function getCategory(): ?Category
     {
         return $this->category;
     }

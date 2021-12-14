@@ -27,7 +27,8 @@ final class CategoryTree
 
     public function __construct(
         CategoryTreeInfrastructure $categoryTreeInfrastructure
-    ) {
+    )
+    {
         $this->categoryTreeInfrastructure = $categoryTreeInfrastructure;
     }
 
@@ -51,7 +52,7 @@ final class CategoryTree
             $subCategoriesCollection = [];
 
             $subCategories = $category->getSubCats();
-            if($subCategories) {
+            if ($subCategories) {
                 foreach ($subCategories as $subCategory) {
                     if ($subCategory->getIsVisible() !== true) {
                         continue;

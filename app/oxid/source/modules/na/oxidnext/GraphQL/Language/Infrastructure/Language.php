@@ -18,7 +18,6 @@ namespace NetAdvising\OxidNext\GraphQL\Language\Infrastructure;
 use Doctrine\DBAL\Exception;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
-use PDO;
 use function getViewName;
 
 /**
@@ -31,7 +30,8 @@ final class Language
 
     public function __construct(
         QueryBuilderFactoryInterface $queryBuilderFactory
-    ) {
+    )
+    {
         $this->queryBuilderFactory = $queryBuilderFactory;
     }
 

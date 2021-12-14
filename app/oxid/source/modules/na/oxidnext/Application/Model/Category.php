@@ -48,7 +48,7 @@ class Category extends Category_parent
      */
     public function getBaseSeoShortLink(?int $iLang = null): string
     {
-        if($iLang === null) {
+        if ($iLang === null) {
             $languageService = Registry::getLang();
             $iLang = $languageService->getBaseLanguage();
         }
@@ -64,7 +64,7 @@ class Category extends Category_parent
     public function getPreviewImage()
     {
         $preview = $this->oxcategories__na_sf_banner->value;
-        if(empty($preview) === true) {
+        if (empty($preview) === true) {
             $parentcategory = oxNew(\OxidEsales\Eshop\Application\Model\Category::class);
             $parentcategory->load($this->oxcategories__oxrootid->value);
             $preview = $parentcategory->oxcategories__na_sf_banner->value;

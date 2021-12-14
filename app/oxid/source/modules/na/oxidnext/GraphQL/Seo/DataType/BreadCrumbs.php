@@ -36,8 +36,9 @@ final class BreadCrumbs
     public function __construct(
         string $link,
         string $title
-    ) {
-        $this->link  = $link;
+    )
+    {
+        $this->link = $link;
         $this->title = $title;
     }
 

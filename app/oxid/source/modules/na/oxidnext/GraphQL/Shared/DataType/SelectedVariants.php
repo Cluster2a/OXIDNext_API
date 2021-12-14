@@ -27,7 +27,8 @@ class SelectedVariants
 
     public function __construct(
         string $variant
-    ) {
+    )
+    {
         $this->variant = $variant;
     }
 

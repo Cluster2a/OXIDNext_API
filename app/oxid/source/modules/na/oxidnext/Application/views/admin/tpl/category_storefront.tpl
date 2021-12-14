@@ -41,22 +41,30 @@
                             [{oxmultilang ident="CATEGORY_MAIN_THUMB"}]
                         </td>
                         <td class="edittext">
-                            <input id="oxthumb" type="text" class="editinput" size="42" maxlength="[{$edit->oxcategories__na_sf_banner->fldmax_length}]" name="editval[oxcategories__na_sf_banner]" value="[{$edit->oxcategories__na_sf_banner->value}]">
+                            <input id="oxthumb" type="text" class="editinput" size="42"
+                                   maxlength="[{$edit->oxcategories__na_sf_banner->fldmax_length}]"
+                                   name="editval[oxcategories__na_sf_banner]"
+                                   value="[{$edit->oxcategories__na_sf_banner->value}]">
                             [{oxinputhelp ident="HELP_CATEGORY_MAIN_THUMB"}]
                         </td>
                         <td class="edittext">
                             [{if (!($edit->oxcategories__na_sf_banner->value=="nopic.jpg" || $edit->oxcategories__na_sf_banner->value=="" || $edit->oxcategories__na_sf_banner->value=="nopic_ico.jpg"))}]
-                                <a href="Javascript:DeletePic('na_sf_banner');" class="delete left" [{include file="help.tpl" helpid=item_delete}]></a>
+                                <a href="Javascript:DeletePic('na_sf_banner');"
+                                   class="delete left" [{include file="help.tpl" helpid=item_delete}]></a>
                             [{/if}]
-                            <input class="editinput" name="myfile[NA_SF_BANNER@oxcategories__na_sf_banner]" type="file"  size="26" [{$readonly}]>
-                            ([{oxmultilang ident="GENERAL_MAX_FILE_UPLOAD"}] [{$sMaxFormattedFileSize}], [{oxmultilang ident="GENERAL_MAX_PICTURE_DIMENSIONS"}])
+                            <input class="editinput" name="myfile[NA_SF_BANNER@oxcategories__na_sf_banner]" type="file"
+                                   size="26" [{$readonly}]>
+                            ([{oxmultilang ident="GENERAL_MAX_FILE_UPLOAD"}] [{$sMaxFormattedFileSize}]
+                            , [{oxmultilang ident="GENERAL_MAX_PICTURE_DIMENSIONS"}])
                         </td>
                     </tr>
                     <tr>
                         <td class="edittext">
                         </td>
                         <td class="edittext" colspan="2"><br>
-                            <input type="submit" class="edittext" name="save" value="[{oxmultilang ident="CATEGORY_MAIN_SAVE"}]" onClick="Javascript:document.myedit.fnc.value='save'" [{$readonly}]><br>
+                            <input type="submit" class="edittext" name="save"
+                                   value="[{oxmultilang ident="CATEGORY_MAIN_SAVE"}]"
+                                   onClick="Javascript:document.myedit.fnc.value='save'" [{$readonly}]><br>
                         </td>
                     </tr>
                     <tr>

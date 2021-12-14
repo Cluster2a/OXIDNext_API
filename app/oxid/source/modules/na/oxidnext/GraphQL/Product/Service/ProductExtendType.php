@@ -15,12 +15,13 @@ declare(strict_types=1);
 
 namespace NetAdvising\OxidNext\GraphQL\Product\Service;
 
+use NetAdvising\OxidNext\GraphQL\Shared\DataType\SelectedVariants;
+use NetAdvising\OxidNext\GraphQL\Shared\DataType\VariantList as VariantListDataType;
+use NetAdvising\OxidNext\GraphQL\Shared\DataType\Variants as VariantsDataType;
+use NetAdvising\OxidNext\GraphQL\Shared\DataType\VariantSelection as VariantSelectionDataType;
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Application\Model\VariantHandler;
 use OxidEsales\GraphQL\Storefront\Product\DataType\Product;
-use NetAdvising\OxidNext\GraphQL\Shared\DataType\VariantSelection as VariantSelectionDataType;
-use NetAdvising\OxidNext\GraphQL\Shared\DataType\VariantList as VariantListDataType;
-use NetAdvising\OxidNext\GraphQL\Shared\DataType\Variants as VariantsDataType;
 
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
@@ -73,21 +74,30 @@ final class ProductExtendType
     /**
      * @Field()
      * @param Product $product
+     * @param SelectedVariants[]|null $selectedVariants
      * @return VariantSelectionDataType
      */
-    public function getVariantSelection(Product $product): VariantSelectionDataType
+    public function getVariantSelection(Product $product, ?array $selectedVariants = null): VariantSelectionDataType
     {
+        $currentUserSelection = [];
+        if (is_null($selectedVariants) !== true) {
+            foreach ($selectedVariants as $variantSelection) {
+                $currentUserSelection[] = $variantSelection->getVariant();
+            }
+        }
+
         $productId = $product->getEshopModel()->getId();
 
         $article = oxNew(Article::class);
         $article->load($productId);
-        $variants = $article->getVariantSelections();
-        if($variants === false) {
+        $variants = $article->getVariantSelections($currentUserSelection);
+        if ($variants === false) {
             $oMdVariants = oxNew(VariantHandler::class);
-            if($oMdVariants->isMdVariant($article) === true) {
+            if ($oMdVariants->isMdVariant($article) === true) {
                 $parent = $article->getParentArticle();
                 $parent->setNoVariantLoading(false);
-                $variants = $parent->getVariantSelections(null, $article->getId());
+                //$variants = $parent->getVariantSelections(null, $article->getId());
+                $variants = $parent->getVariantSelections($currentUserSelection);
             }
         }
 
@@ -106,7 +116,7 @@ final class ProductExtendType
             }
 
             $activeSelection = $variant->getActiveSelection();
-            if(is_null($activeSelection) !== true) {
+            if (is_null($activeSelection) !== true) {
                 $activeSelection = new VariantListDataType(
                     $activeSelection->getName(),
                     $activeSelection->getValue(),
@@ -123,7 +133,7 @@ final class ProductExtendType
         }
 
         $productId = null;
-        if($variants['blPerfectFit']=== true) {
+        if ($variants['blPerfectFit'] === true) {
             $productId = $variants['oActiveVariant']->getId();
         }
 

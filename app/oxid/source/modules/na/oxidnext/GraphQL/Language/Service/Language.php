@@ -20,7 +20,8 @@ final class Language
 
     public function __construct(
         LanguageRepository $languageRepository
-    ) {
+    )
+    {
         $this->languageRepository = $languageRepository;
     }
 
@@ -39,7 +40,7 @@ final class Language
                 $language->id,
                 $language->name,
                 $language->abbr,
-                (bool) $language->selected,
+                (bool)$language->selected,
                 $language->url
             );
         }

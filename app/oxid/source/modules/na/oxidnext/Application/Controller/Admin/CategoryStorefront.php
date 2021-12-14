@@ -22,7 +22,7 @@ use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use stdClass;
 
-class CategoryStorefront extends  AdminDetailsController
+class CategoryStorefront extends AdminDetailsController
 {
     public function render()
     {
@@ -74,7 +74,7 @@ class CategoryStorefront extends  AdminDetailsController
         $oxId = $this->getEditObjectId();
         $params = Registry::getRequest()->getRequestEscapedParameter("editval");
 
-        $category = oxNew(\OxidEsales\Eshop\Application\Model\Category::class);
+        $category = oxNew(Category::class);
         $catLang = Registry::getRequest()->getRequestEscapedParameter("catlang");
         $catLang = $catLang ? $catLang : 0;
 

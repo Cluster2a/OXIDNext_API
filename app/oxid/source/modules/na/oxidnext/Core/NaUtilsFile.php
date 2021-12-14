@@ -15,12 +15,7 @@ declare(strict_types=1);
 
 namespace NetAdvising\OxidNext\Core;
 
-use OxidEsales\Eshop\Core\Exception\ExceptionToDisplay;
-use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\UtilsFile;
-use OxidEsales\EshopCommunity\Internal\Framework\FileSystem\Bridge\MasterImageHandlerBridgeInterface;
-use OxidEsales\Facts\Facts;
-use Webmozart\PathUtil\Path;
 
 class NaUtilsFile extends UtilsFile
 {

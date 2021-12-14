@@ -33,7 +33,7 @@ class Variants
     public function variants(ID $productId, array $selectedVariants): VariantSelectionDataType
     {
         $currentUserSelection = [];
-        if(is_null($selectedVariants) !== true) {
+        if (is_null($selectedVariants) !== true) {
             foreach ($selectedVariants as $variantSelection) {
                 $currentUserSelection[] = $variantSelection->getVariant();
             }
@@ -58,7 +58,7 @@ class Variants
             }
 
             $activeSelection = $variant->getActiveSelection();
-            if(is_null($activeSelection) !== true) {
+            if (is_null($activeSelection) !== true) {
                 $activeSelection = new VariantListDataType(
                     $activeSelection->getName(),
                     $activeSelection->getValue(),
@@ -75,7 +75,7 @@ class Variants
         }
 
         $productId = null;
-        if($variants['blPerfectFit']=== true) {
+        if ($variants['blPerfectFit'] === true) {
             $productId = $variants['oActiveVariant']->getId();
         }
 

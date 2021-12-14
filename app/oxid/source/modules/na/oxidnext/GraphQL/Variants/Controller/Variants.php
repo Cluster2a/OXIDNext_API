@@ -28,7 +28,8 @@ final class Variants
 
     public function __construct(
         VariantsService $variantsService
-    ) {
+    )
+    {
         $this->variantsService = $variantsService;
     }
 
@@ -40,7 +41,7 @@ final class Variants
      * @return VariantSelectionDataType
      */
     public function variants(
-        ID $productId,
+        ID     $productId,
         ?array $selectedVariants = null
     ): VariantSelectionDataType
     {

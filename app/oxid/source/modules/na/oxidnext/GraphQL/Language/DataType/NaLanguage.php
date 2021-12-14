@@ -33,13 +33,14 @@ final class NaLanguage
     public ?string $url;
 
     public function __construct(
-        int $id,
-        string $name,
-        string $abbr,
-        bool $selected,
+        int     $id,
+        string  $name,
+        string  $abbr,
+        bool    $selected,
         ?string $url
-    ) {
-        $this->id   = $id;
+    )
+    {
+        $this->id = $id;
         $this->name = $name;
         $this->abbr = $abbr;
         $this->selected = $selected;

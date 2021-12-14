@@ -16,16 +16,16 @@ declare(strict_types=1);
 namespace NetAdvising\OxidNext\GraphQL\Seo\Service;
 
 use Doctrine\DBAL\Exception;
-use NetAdvising\OxidNext\GraphQL\Seo\DataType\Common as CommonDataType;
 use NetAdvising\OxidNext\GraphQL\Seo\DataType\BreadCrumbs as BreadCrumbsDataType;
+use NetAdvising\OxidNext\GraphQL\Seo\DataType\Common as CommonDataType;
 use NetAdvising\OxidNext\GraphQL\Seo\Infrastructure\SeoRepository;
 use OxidEsales\Eshop\Application\Component\Locator;
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Application\Model\Category;
 use OxidEsales\Eshop\Core\Exception\RoutingException;
 use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\GraphQL\Storefront\Product\DataType\Product as ProductDataType;
 use OxidEsales\GraphQL\Storefront\Category\DataType\Category as CategoryDataType;
+use OxidEsales\GraphQL\Storefront\Product\DataType\Product as ProductDataType;
 
 /**
  *
@@ -40,7 +40,8 @@ final class Seo
      */
     public function __construct(
         SeoRepository $seoRepository
-    ) {
+    )
+    {
         $this->seoRepository = $seoRepository;
     }
 
@@ -51,8 +52,8 @@ final class Seo
     private function queryToArray(string $qry)
     {
         $result = array();
-        if (strpos($qry,'=')) {
-            if (strpos($qry,'?')!==false) {
+        if (strpos($qry, '=')) {
+            if (strpos($qry, '?') !== false) {
                 $q = parse_url($qry);
                 $qry = $q['query'];
             }
@@ -78,13 +79,13 @@ final class Seo
         $seoObject = $this->seoRepository->getSeoByUrl($url);
 
         $langId = $seoObject['oxlang'];
-        if(empty($langId) === true) {
+        if (empty($langId) === true) {
             $langId = 0;
         }
 
 
         $urlQuery = $this->queryToArray(html_entity_decode($seoObject['oxstdurl']));
-        foreach($urlQuery as $key => $value) {
+        foreach ($urlQuery as $key => $value) {
             $_GET[$key] = $value;
         }
         $classKey = $urlQuery['cl'];
@@ -97,7 +98,7 @@ final class Seo
             $view->setFncName($function);
             $view->init();
 
-            if($classKey === 'details') {
+            if ($classKey === 'details') {
                 $article = $view->getProduct();
                 $locator = oxNew(Locator::class, $view->getListType());
                 $locator->setLocatorData($article, $view);
@@ -129,7 +130,7 @@ final class Seo
                 return new CommonDataType(
                     $seoObject['oxtype'],
                     $seoObject['oxobjectid'],
-                    (int) $seoObject['oxlang'],
+                    (int)$seoObject['oxlang'],
                     $articleDataType,
                     null,
                     $breadCrumbDataType
@@ -143,7 +144,7 @@ final class Seo
                 return new CommonDataType(
                     $seoObject['oxtype'],
                     $seoObject['oxobjectid'],
-                    (int) $seoObject['oxlang'],
+                    (int)$seoObject['oxlang'],
                     null,
                     $categoryDataType,
                     $breadCrumbDataType
@@ -154,7 +155,7 @@ final class Seo
                 return new CommonDataType(
                     $seoObject['oxtype'],
                     $seoObject['oxobjectid'],
-                    (int) $seoObject['oxlang'],
+                    (int)$seoObject['oxlang'],
                     null,
                     null,
                     $breadCrumbDataType
