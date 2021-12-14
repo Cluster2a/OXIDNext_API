@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace NetAdvising\OxidNext\GraphQL\Product\Service;
 
 use OxidEsales\Eshop\Application\Model\Article;
+use OxidEsales\Eshop\Application\Model\VariantHandler;
 use OxidEsales\GraphQL\Storefront\Product\DataType\Product;
 use NetAdvising\OxidNext\GraphQL\Shared\DataType\VariantSelection as VariantSelectionDataType;
 use NetAdvising\OxidNext\GraphQL\Shared\DataType\VariantList as VariantListDataType;
@@ -81,6 +82,14 @@ final class ProductExtendType
         $article = oxNew(Article::class);
         $article->load($productId);
         $variants = $article->getVariantSelections();
+        if($variants === false) {
+            $oMdVariants = oxNew(VariantHandler::class);
+            if($oMdVariants->isMdVariant($article) === true) {
+                $parent = $article->getParentArticle();
+                $parent->setNoVariantLoading(false);
+                $variants = $parent->getVariantSelections(null, $article->getId());
+            }
+        }
 
         $variantSelection = [];
 

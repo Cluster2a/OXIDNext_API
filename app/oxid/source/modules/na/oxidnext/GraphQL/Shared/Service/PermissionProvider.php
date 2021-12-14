@@ -72,6 +72,7 @@ final class PermissionProvider implements PermissionProviderInterface
             ],
             'oxidanonymous' => [
                 'CREATE_BASKET',
+                'VIEW_BASKET',
                 'ADD_PRODUCT_TO_BASKET',
                 'REMOVE_BASKET_PRODUCT',
                 'ADD_VOUCHER',
