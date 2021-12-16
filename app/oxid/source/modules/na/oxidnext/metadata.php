@@ -33,7 +33,7 @@ $aModule = [
     'email' => '',
     'extend' => [
         \OxidEsales\Eshop\Application\Model\Category::class => \NetAdvising\OxidNext\Application\Model\Category::class,
-        \OxidEsales\Eshop\Application\Model\Article::class => \NetAdvising\OxidNext\Application\Model\Article::class,
+        \OxidEsales\Eshop\Application\Model\Article::class => \NetAdvising\OxidNext\Application\Model\Article::class
     ],
     'controllers' => [
         'na_oxidnext_admin_category_storefront' => CategoryStorefront::class,

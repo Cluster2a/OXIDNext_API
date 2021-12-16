@@ -50,6 +50,8 @@ final class NamespaceMapper implements NamespaceMapperInterface
 
             '\\NetAdvising\\OxidNext\\GraphQL\\Shared\\DataType' => __DIR__ . '/../../Shared/DataType/',
             '\\NetAdvising\\OxidNext\\GraphQL\\Shared\\Service' => __DIR__ . '/../../Shared/Service/',
+
+            '\\NetAdvising\\OxidNext\\GraphQL\\Basket\\Service' => __DIR__ . '/../../Basket/Service/',
         ];
     }
 }
