@@ -17,7 +17,7 @@ final class Basket
     public function formattingPrice(EshopBasketModel $basket): string
     {
         $basket->calculateBasket();
-        $nettoSum = $basket->getNettoSum();
+        $nettoSum = $basket->getBruttoSum();
         $priceFormatter = new FormatPriceLogic();
 
         return $priceFormatter->formatPrice(['price' => $nettoSum]);
