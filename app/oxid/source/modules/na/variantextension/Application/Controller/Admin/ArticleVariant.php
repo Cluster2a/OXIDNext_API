@@ -24,6 +24,7 @@ use OxidEsales\Eshop\Core\UtilsFile;
 
 class ArticleVariant extends ArticleVariant_parent
 {
+    protected string $imagePath = '';
 
     /**
      * @throws \OxidEsales\Eshop\Core\Exception\SystemComponentException
@@ -40,34 +41,7 @@ class ArticleVariant extends ArticleVariant_parent
 
             $currentVariantExtensions = $oArticle->getVariantExtension();
 
-
-            $newImages = [];
-            $utilsFile = oxNew(NaUtilsFile::class);
-            $aFiles = $_FILES;
-            if (isset($aFiles['myfile']['name'])) {
-                foreach ($aFiles['myfile']['name'] as $sKey => $sValue) {
-                    $aFiletype = explode("@", $sKey);
-                    $sType = $aFiletype[0];
-                    $index = (int) str_replace("varinat_image", "", $aFiletype[1]);
-
-                    $sValue = strtolower($sValue);
-                    $sImagePath = $utilsFile->getImagePath($sType);
-
-                    $newImages[$index] = $utilsFile->uniqueImageName($sValue, $sType, false, $sImagePath, true);
-                }
-            }
-
-            $deleteImages = [];
-            foreach ($currentVariantExtensions as $currentVariantExtension) {
-                $id = $currentVariantExtension->id;
-                $imageName = $currentVariantExtension->variantImage;
-
-                if(empty($newImages[$id]) !== true && $imageName !== $newImages[$id]) {
-                    $deleteImages[] = $imageName;
-                }
-            }
-
-            $this->deleteOldVariantImages($deleteImages);
+            $this->deleteArticleVariantImages($currentVariantExtensions);
 
             $uploadedFiles = $this->uploadArticleVariantImages();
 
@@ -114,7 +88,7 @@ class ArticleVariant extends ArticleVariant_parent
                 if(empty($variantExtensionId) !== true && $id !== (int) $variantExtensionId) {
                     $newVariantExtension[] = $currentVariantExtension;
                 } else {
-                    $this->deleteOldVariantImages([$currentVariantExtension->variantImage]);
+                    $this->deleteImage($currentVariantExtension->variantImage);
                 }
             }
 
@@ -126,14 +100,43 @@ class ArticleVariant extends ArticleVariant_parent
         }
     }
 
-    private function deleteOldVariantImages(array $images)
+    private function deleteArticleVariantImages(array $variantExtensions)
     {
+        $newImages = [];
         $utilsFile = oxNew(NaUtilsFile::class);
-        $sImagePath = $utilsFile->getImagePath('NA_VARINAT_IMAGES');
-        foreach ($images as $image) {
-            @unlink($sImagePath . DIRECTORY_SEPARATOR . $image);
+        $aFiles = $_FILES;
+        if (isset($aFiles['myfile']['name'])) {
+            foreach ($aFiles['myfile']['name'] as $sKey => $sValue) {
+                $aFiletype = explode("@", $sKey);
+                $sType = $aFiletype[0];
+                $index = (int) str_replace("varinat_image", "", $aFiletype[1]);
+                $sValue = strtolower($sValue);
+                $sImagePath = $utilsFile->getImagePath($sType);
+
+                if (empty($sValue) !== true) {
+                    $newImages[$index] = $utilsFile->uniqueImageName($sValue, $sType, false, $sImagePath, true);
+                }
+            }
         }
 
+        foreach ($variantExtensions as $variantExtension) {
+            $id = $variantExtension->id;
+            $imageName = $variantExtension->variantImage;
+
+            if(empty($newImages[$id]) !== true && $imageName !== $newImages[$id]) {
+                $this->deleteImage($imageName);
+            }
+        }
+    }
+
+    private function deleteImage($imageName)
+    {
+        if(empty($this->imagePath) === true) {
+            $utilsFile = oxNew(NaUtilsFile::class);
+            $this->imagePath = $utilsFile->getImagePath('NA_VARINAT_IMAGES');
+        }
+
+        @unlink($this->imagePath . DIRECTORY_SEPARATOR . $imageName);
     }
 
     /**
@@ -143,14 +146,6 @@ class ArticleVariant extends ArticleVariant_parent
      */
     public function uploadArticleVariantImages(): array
     {
-        // lade Datensatz am Artikel
-
-        // uploade alle Dateien
-
-        // Wo Datensatz vorhanden und aktuell upload - lösche alten Datensatz (zuvor geladen)
-
-        // Wo Datensatz nicht mehr vorhanden, lösche am Artikel + Bilder
-
 
         $utilsFile = oxNew(NaUtilsFile::class);
 

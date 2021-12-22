@@ -26,6 +26,11 @@ class NaUtilsFile extends UtilsFile
         $this->_aTypeToPath['NA_VARINAT_IMAGES'] = 'master/na_variantImages';
     }
 
+    public function getImagePathRaw($ident)
+    {
+        return $this->_aTypeToPath[$ident];
+    }
+
     public function uniqueImageName($sValue, $sType, $blDemo, $sImagePath, $blUnique = true):string {
         return $this->prepareImageName($sValue, $sType, $blDemo, $sImagePath, $blUnique = true);
     }

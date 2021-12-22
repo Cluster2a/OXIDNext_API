@@ -15,7 +15,10 @@
  * Metadata version
  */
 
+use NetAdvising\VariantExtension\Application\Model\VariantHandler;
 use OxidEsales\Eshop\Application\Controller\Admin\ArticleVariant;
+use OxidEsales\Eshop\Application\Model\Selection;
+use OxidEsales\Eshop\Application\Model\VariantSelectList;
 
 $sMetadataVersion = '2.0';
 
@@ -34,15 +37,27 @@ $aModule = [
     'extend' => [
         ArticleVariant::class => \NetAdvising\VariantExtension\Application\Controller\Admin\ArticleVariant::class,
         \OxidEsales\Eshop\Application\Model\Article::class => \NetAdvising\VariantExtension\Application\Model\Article::class,
+        Selection::class => \NetAdvising\VariantExtension\Application\Model\Selection::class,
+        VariantSelectList::class => \NetAdvising\VariantExtension\Application\Model\VariantSelectList::class,
+        OxidEsales\Eshop\Application\Model\VariantHandler::class => VariantHandler::class,
     ],
     'controllers' => [],
-    'templates' => [],
+    'templates' => [
+        'variant_extension_selectbox.tpl' => 'Application/views/tpl/variant_extension_selectbox.tpl',
+    ],
     'blocks' => [
         [
             'template' => 'article_variant.tpl',
             'block' => 'admin_article_variant_bottom_extended',
             'file' => 'Application/views/admin/tpl/admin_article_variant_bottom_extended.tpl'
+        ],
+        [
+            'template' => 'page/details/inc/productmain.tpl',
+            'block' => 'details_productmain_variantselections',
+            'file' => 'Application/views/blocks/page/details/inc/details_productmain_variantselections.tpl'
         ]
+
+
     ],
     'settings' => [],
 ];
