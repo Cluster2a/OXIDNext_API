@@ -62,7 +62,6 @@ final class Language
                 ':url' => $url,
             ]);
 
-        $t = $queryBuilder->getSQL();
 
         $languages = $languageService->getLanguageArray();
         $objectId = $queryBuilder->execute()->fetchColumn();
@@ -80,6 +79,7 @@ final class Language
             ]);
 
         $seoUrl = $queryBuilder->execute()->fetchAll();
+
         foreach ($languages as $language) {
             $language->url = $seoUrl[$language->id]['url'];
         }

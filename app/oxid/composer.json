@@ -16,7 +16,8 @@
     "oxid-esales/oxideshop-metapackage-ce": "v7.0.0-rc.1",
     "oxid-esales/graphql-base": "dev-master",
     "oxid-esales/graphql-storefront": "dev-master",
-    "netadvising/oxidnext":"v1.0.1"
+    "netadvising/oxidnext":"v1.0.1",
+    "netadvising/variantextension":"v0.0.1"
   },
   "require-dev": {
     "incenteev/composer-parameter-handler": "^v2.1.4",

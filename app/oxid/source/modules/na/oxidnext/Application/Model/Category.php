@@ -77,4 +77,21 @@ class Category extends Category_parent
 
         return "";
     }
+
+    public function save()
+    {
+        $ret = parent::save();
+
+        $languageService = Registry::getLang();
+        $languages = $languageService->getLanguageArray();
+
+        $genCategory = oxNew(\OxidEsales\Eshop\Application\Model\Category::class);
+
+        foreach ($languages as $language) {
+            $genCategory->loadInLang($language->id, $this->getId());
+            $genCategory->getLink();
+        }
+
+        return $ret;
+    }
 }

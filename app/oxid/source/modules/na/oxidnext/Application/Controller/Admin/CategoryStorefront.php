@@ -118,21 +118,4 @@ class CategoryStorefront extends AdminDetailsController
 
         return $utilsFile->processFiles($category);
     }
-
-    /**
-     * Parse parameters prior to saving category.
-     *
-     * @param array $aReqParams Request parameters.
-     *
-     * @return array
-     */
-    protected function parseRequestParametersForSave(array $aReqParams): array // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
-    {
-        // checkbox handling
-        if (!isset($aReqParams['oxcategories__na_sf_banner'])) {
-            $aReqParams['oxcategories__na_sf_banner'] = '';
-        }
-
-        return $aReqParams;
-    }
 }

@@ -1,0 +1,24 @@
+{
+  "name": "netadvising/variantextension",
+  "description": "",
+  "type": "netadvising-module",
+  "version": "v0.0.1",
+  "keywords": [
+    "oxid",
+    "modules",
+    "eShop",
+    "variants",
+    "iamges"
+  ],
+  "license": [
+    "GPL-3.0"
+  ],
+  "require": {
+    "php": "^7.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "NetAdvising\\VariantExtension\\": "../../../source/modules/na/variantextension"
+    }
+  }
+}

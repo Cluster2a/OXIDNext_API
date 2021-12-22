@@ -98,4 +98,30 @@ class Article extends Article_parent
         $oEncoder = Registry::get(SeoEncoderArticle::class);
         return $oEncoder->getArticleUri($this, $iLang);
     }
+
+    public function save()
+    {
+        $ret = parent::save();
+
+        $languageService = Registry::getLang();
+        $languages = $languageService->getLanguageArray();
+
+        $genArticle = oxNew(\OxidEsales\Eshop\Application\Model\Article::class);
+
+        foreach ($languages as $language) {
+            $genArticle->loadInLang($language->id, $this->getId());
+            $genArticle->getLink();
+        }
+
+        $genArticle->load($this->getId());
+        $genVariants = $genArticle->getVariants();
+        foreach ($genVariants as $genVariant) {
+            foreach ($languages as $language) {
+                $genVariant->loadInLang($language->id, $genVariant->getId());
+                $genVariant->getLink();
+            }
+        }
+
+        return $ret;
+    }
 }

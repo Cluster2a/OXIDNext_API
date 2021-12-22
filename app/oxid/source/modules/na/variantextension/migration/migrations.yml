@@ -1,0 +1,4 @@
+name: Variant extension module migration (na/variantextension)
+migrations_namespace: NetAdvising\VariantExtension\Migrations
+table_name: oxmigrations_variantextension
+migrations_directory: data

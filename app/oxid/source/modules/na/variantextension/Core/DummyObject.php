@@ -13,15 +13,23 @@
 
 declare(strict_types=1);
 
-namespace NetAdvising\OxidNext\Core;
+namespace NetAdvising\VariantExtension\Core;
 
-use OxidEsales\Eshop\Core\UtilsFile;
-
-class NaUtilsFile extends UtilsFile
+class DummyObject
 {
-    public function __construct()
+    protected array $files = [];
+    protected int $key = 0;
+    protected \stdClass $wrapper;
+
+    public function __construct(\stdClass $wrapper, int $key)
     {
-        parent::__construct();
-        $this->_aTypeToPath['NA_SF_BANNER'] = 'master/category/na_sf_banner';
+        $this->wrapper = $wrapper;
+        $this->key = $key;
+    }
+
+    public function setValue(string $value): void {
+        $this->wrapper->files[$this->key] = $value;
+        unset($this->wrapper);
+        unset($this->key);
     }
 }

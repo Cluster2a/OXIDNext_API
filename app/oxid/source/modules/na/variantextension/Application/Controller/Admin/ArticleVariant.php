@@ -1,0 +1,173 @@
+<?php
+
+/**
+ * This Software is the property of netAdvising and is protected by copyright law - it is NOT Freeware.
+ * Any unauthorized use of this software without a valid license is a violation of the license agreement and will be
+ * prosecuted by civil and criminal law.
+ *
+ * @copyright      (C) netAdvising GmbH
+ * @since              Version 1.0
+ * @author             Alexander Hirschfeld <info@netadvising.de>
+ * @link               https://www.netadvising.de
+ */
+
+declare(strict_types=1);
+
+namespace NetAdvising\VariantExtension\Application\Controller\Admin;
+
+use NetAdvising\VariantExtension\Core\DummyObject;
+use NetAdvising\VariantExtension\Core\NaUtilsFile;
+use OxidEsales\Eshop\Application\Model\Article;
+use OxidEsales\Eshop\Core\Field;
+use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\Eshop\Core\UtilsFile;
+
+class ArticleVariant extends ArticleVariant_parent
+{
+
+    /**
+     * @throws \OxidEsales\Eshop\Core\Exception\SystemComponentException
+     */
+    public function saveVariantExtension()
+    {
+        $sOXID = Registry::getRequest()->getRequestEscapedParameter("voxid");
+
+        /** @var Article $oArticle */
+        $oArticle = oxNew(Article::class);
+
+        if ($sOXID != "-1") {
+            $oArticle->loadInLang($this->_iEditLang, $sOXID);
+
+            $currentVariantExtensions = $oArticle->getVariantExtension();
+
+
+            $newImages = [];
+            $utilsFile = oxNew(NaUtilsFile::class);
+            $aFiles = $_FILES;
+            if (isset($aFiles['myfile']['name'])) {
+                foreach ($aFiles['myfile']['name'] as $sKey => $sValue) {
+                    $aFiletype = explode("@", $sKey);
+                    $sType = $aFiletype[0];
+                    $index = (int) str_replace("varinat_image", "", $aFiletype[1]);
+
+                    $sValue = strtolower($sValue);
+                    $sImagePath = $utilsFile->getImagePath($sType);
+
+                    $newImages[$index] = $utilsFile->uniqueImageName($sValue, $sType, false, $sImagePath, true);
+                }
+            }
+
+            $deleteImages = [];
+            foreach ($currentVariantExtensions as $currentVariantExtension) {
+                $id = $currentVariantExtension->id;
+                $imageName = $currentVariantExtension->variantImage;
+
+                if(empty($newImages[$id]) !== true && $imageName !== $newImages[$id]) {
+                    $deleteImages[] = $imageName;
+                }
+            }
+
+            $this->deleteOldVariantImages($deleteImages);
+
+            $uploadedFiles = $this->uploadArticleVariantImages();
+
+
+            $variantNames = Registry::getRequest()->getRequestEscapedParameter("variantName");
+            $variantValues = Registry::getRequest()->getRequestEscapedParameter("variantValue");
+            $variantContentTypes = Registry::getRequest()->getRequestEscapedParameter("variantContentType");
+            $variantImages = Registry::getRequest()->getRequestEscapedParameter("variantImage");
+            $variantColorCodes = Registry::getRequest()->getRequestEscapedParameter("variantColorCode");
+
+            $mergedData = [];
+            foreach ($variantNames as $key => $value) {
+                $record = new \stdClass();
+                $record->id = $key;
+                $record->variantName = $value;
+                $record->variantValue = $variantValues[$key];
+                $record->variantContentType = $variantContentTypes[$key];
+                $record->variantColorCode = $variantColorCodes[$key];
+                $record->variantImage = empty($uploadedFiles[$key]) === true ? $variantImages[$key] : $uploadedFiles[$key];
+                $mergedData[] = $record;
+            }
+
+            $oArticle->oxarticles__na_variantextension = new Field(serialize($mergedData), Field::T_RAW);
+            $oArticle->save();
+        }
+    }
+
+    public function deleteSingleVariantExtension()
+    {
+        $sOXID = Registry::getRequest()->getRequestEscapedParameter("voxid");
+        $variantExtensionId = Registry::getRequest()->getRequestEscapedParameter("variantId");
+
+        /** @var Article $oArticle */
+        $oArticle = oxNew(Article::class);
+
+        if ($sOXID != "-1") {
+            $oArticle->loadInLang($this->_iEditLang, $sOXID);
+            $currentVariantExtensions = $oArticle->getVariantExtension();
+
+            $newVariantExtension = [];
+            foreach ($currentVariantExtensions as $currentVariantExtension) {
+                $id = $currentVariantExtension->id;
+
+                if(empty($variantExtensionId) !== true && $id !== (int) $variantExtensionId) {
+                    $newVariantExtension[] = $currentVariantExtension;
+                } else {
+                    $this->deleteOldVariantImages([$currentVariantExtension->variantImage]);
+                }
+            }
+
+            $oArticle->oxarticles__na_variantextension = new Field(serialize($newVariantExtension), Field::T_RAW);
+            $oArticle->save();
+
+            $currentVariantExtensions = $oArticle->getVariantExtensionAdminJSON();
+            Registry::getUtils()->showMessageAndExit($currentVariantExtensions);
+        }
+    }
+
+    private function deleteOldVariantImages(array $images)
+    {
+        $utilsFile = oxNew(NaUtilsFile::class);
+        $sImagePath = $utilsFile->getImagePath('NA_VARINAT_IMAGES');
+        foreach ($images as $image) {
+            @unlink($sImagePath . DIRECTORY_SEPARATOR . $image);
+        }
+
+    }
+
+    /**
+     * Saves article variant.
+     *
+     * @return array
+     */
+    public function uploadArticleVariantImages(): array
+    {
+        // lade Datensatz am Artikel
+
+        // uploade alle Dateien
+
+        // Wo Datensatz vorhanden und aktuell upload - lösche alten Datensatz (zuvor geladen)
+
+        // Wo Datensatz nicht mehr vorhanden, lösche am Artikel + Bilder
+
+
+        $utilsFile = oxNew(NaUtilsFile::class);
+
+        $wrapper = new \stdClass();
+        $aFiles = $_FILES;
+        $wrapper->files = [];
+        if (isset($aFiles['myfile']['name'])) {
+            foreach ($aFiles['myfile']['name'] as $sKey => $sValue) {
+                $aFiletype = explode("@", $sKey);
+                $sKey = $aFiletype[1];
+                $field = new DummyObject($wrapper, (int) str_replace("varinat_image", "", $sKey));
+                $wrapper->{$sKey} = $field;
+            }
+
+        }
+        $utilsFile->processFiles($wrapper);
+        return $wrapper->files;
+    }
+
+}

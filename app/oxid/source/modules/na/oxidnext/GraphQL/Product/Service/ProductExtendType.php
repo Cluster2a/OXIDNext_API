@@ -92,8 +92,7 @@ final class ProductExtendType
         $article->load($productId);
         $variants = $article->getVariantSelections($currentUserSelection);
         if ($variants === false) {
-            $oMdVariants = oxNew(VariantHandler::class);
-            if ($oMdVariants->isMdVariant($article) === true) {
+            if ($article->isVariant() === true) {
                 $parent = $article->getParentArticle();
                 $parent->setNoVariantLoading(false);
                 //$variants = $parent->getVariantSelections(null, $article->getId());
