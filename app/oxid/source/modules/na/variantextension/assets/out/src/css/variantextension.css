@@ -5,35 +5,10 @@
     display: inline-block;
 }
 
-.color-picker.active {
-    box-shadow: 0 0 0 3px #fff, 0 0 #0000;
+.variant-image.active {
+    box-shadow: 0 0 0 2px #fff, 0 0 0 calc(3px + 2px) #cccccc, 0 0 #0000;
 }
 
-.list-group-horizontal{
-    padding-left: 0;
-}
-
-.list-group.list-group-horizontal .list-group-item.active {
-
-}
-
-.list-group.list-group-horizontal{
-    display: flex;
-    flex-direction: row;
-}
-
-.list-group.list-group-horizontal .list-group-item {
-    margin-bottom: 0;
-    margin-right: 0;
-    border-right-width: 0;
-    border-radius: 0!important;
-}
-.list-group.list-group-horizontal .list-group-item:first-child {
-    border-top-right-radius:0;
-    border-bottom-left-radius:4px;
-}
-.list-group.list-group-horizontal .list-group-item:last-child {
-    border-top-right-radius:4px;
-    border-bottom-left-radius:0;
-    border-right-width: 1px;
+.variant-image {
+    border-radius: 0.25rem;
 }

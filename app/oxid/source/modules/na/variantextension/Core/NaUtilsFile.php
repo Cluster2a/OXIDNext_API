@@ -18,19 +18,37 @@ namespace NetAdvising\VariantExtension\Core;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\UtilsFile;
 
+/**
+ *
+ */
 class NaUtilsFile extends UtilsFile
 {
+    /**
+     * constructor
+     */
     public function __construct()
     {
         parent::__construct();
         $this->_aTypeToPath['NA_VARINAT_IMAGES'] = 'master/na_variantImages';
     }
 
+    /**
+     * @param $ident
+     * @return mixed|string
+     */
     public function getImagePathRaw($ident)
     {
         return $this->_aTypeToPath[$ident];
     }
 
+    /**
+     * @param $sValue
+     * @param $sType
+     * @param $blDemo
+     * @param $sImagePath
+     * @param $blUnique
+     * @return string
+     */
     public function uniqueImageName($sValue, $sType, $blDemo, $sImagePath, $blUnique = true):string {
         return $this->prepareImageName($sValue, $sType, $blDemo, $sImagePath, $blUnique = true);
     }

@@ -18,12 +18,24 @@ namespace NetAdvising\VariantExtension\Application\Model;
 use NetAdvising\VariantExtension\Core\NaUtilsFile;
 use OxidEsales\Eshop\Core\Registry;
 
+/**
+ *
+ */
 class Selection extends Selection_parent
 {
+    /**
+     * @var string|mixed|null
+     */
     protected ?string $colorCode = null;
 
+    /**
+     * @var string|mixed|null
+     */
     protected ?string $image = null;
 
+    /**
+     * @var string|mixed|null
+     */
     protected ?string $type = null;
 
     /**
@@ -61,16 +73,25 @@ class Selection extends Selection_parent
         }
     }
 
+    /**
+     * @return mixed|string|null
+     */
     public function getColorCode()
     {
         return $this->colorCode;
     }
 
+    /**
+     * @return mixed|string|null
+     */
     public function getImage()
     {
         return $this->image;
     }
 
+    /**
+     * @return mixed|string|null
+     */
     public function getType()
     {
         return $this->type;

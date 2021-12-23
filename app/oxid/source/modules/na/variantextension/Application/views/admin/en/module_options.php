@@ -9,6 +9,15 @@
  * @author             Alexander Hirschfeld <info@netadvising.de>
  * @link               https://www.netadvising.de
  */
+
 $aLang = array(
-    'NA_VARIANT_COLORCODE' => 'color code',
+    'NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_NAME' => 'Name Variant',
+    'NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_VALUE' => 'Value Variant',
+    'NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_CONTENT_TYPE' => 'Type',
+    'NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_CONTENT_TYPE_COLOR' => 'Color',
+    'NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_CONTENT_TYPE_IMAGE' => 'Image',
+    'NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_COLOR_CODE' => 'Color code',
+    'NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_IMAGE' => 'Image',
+    'NA_ARTICLE_VARIANT_BTN_ADD_EXTENSION' => 'Add extension',
+    'NA_ARTICLE_VARIANT_BTN_SAVE' => 'Save extension'
 );

@@ -18,16 +18,22 @@ namespace NetAdvising\VariantExtension\Application\Controller\Admin;
 use NetAdvising\VariantExtension\Core\DummyObject;
 use NetAdvising\VariantExtension\Core\NaUtilsFile;
 use OxidEsales\Eshop\Application\Model\Article;
+use OxidEsales\Eshop\Core\Exception\SystemComponentException;
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\Eshop\Core\UtilsFile;
 
+/**
+ * ArticleVariant extension
+ */
 class ArticleVariant extends ArticleVariant_parent
 {
+    /**
+     * @var string
+     */
     protected string $imagePath = '';
 
     /**
-     * @throws \OxidEsales\Eshop\Core\Exception\SystemComponentException
+     * @throws SystemComponentException
      */
     public function saveVariantExtension()
     {
@@ -44,7 +50,6 @@ class ArticleVariant extends ArticleVariant_parent
             $this->deleteArticleVariantImages($currentVariantExtensions);
 
             $uploadedFiles = $this->uploadArticleVariantImages();
-
 
             $variantNames = Registry::getRequest()->getRequestEscapedParameter("variantName");
             $variantValues = Registry::getRequest()->getRequestEscapedParameter("variantValue");
@@ -69,37 +74,10 @@ class ArticleVariant extends ArticleVariant_parent
         }
     }
 
-    public function deleteSingleVariantExtension()
-    {
-        $sOXID = Registry::getRequest()->getRequestEscapedParameter("voxid");
-        $variantExtensionId = Registry::getRequest()->getRequestEscapedParameter("variantId");
-
-        /** @var Article $oArticle */
-        $oArticle = oxNew(Article::class);
-
-        if ($sOXID != "-1") {
-            $oArticle->loadInLang($this->_iEditLang, $sOXID);
-            $currentVariantExtensions = $oArticle->getVariantExtension();
-
-            $newVariantExtension = [];
-            foreach ($currentVariantExtensions as $currentVariantExtension) {
-                $id = $currentVariantExtension->id;
-
-                if(empty($variantExtensionId) !== true && $id !== (int) $variantExtensionId) {
-                    $newVariantExtension[] = $currentVariantExtension;
-                } else {
-                    $this->deleteImage($currentVariantExtension->variantImage);
-                }
-            }
-
-            $oArticle->oxarticles__na_variantextension = new Field(serialize($newVariantExtension), Field::T_RAW);
-            $oArticle->save();
-
-            $currentVariantExtensions = $oArticle->getVariantExtensionAdminJSON();
-            Registry::getUtils()->showMessageAndExit($currentVariantExtensions);
-        }
-    }
-
+    /**
+     * @param array $variantExtensions
+     * @return void
+     */
     private function deleteArticleVariantImages(array $variantExtensions)
     {
         $newImages = [];
@@ -129,6 +107,10 @@ class ArticleVariant extends ArticleVariant_parent
         }
     }
 
+    /**
+     * @param $imageName
+     * @return void
+     */
     private function deleteImage($imageName)
     {
         if(empty($this->imagePath) === true) {

@@ -15,8 +15,14 @@ declare(strict_types=1);
 
 namespace NetAdvising\VariantExtension\Application\Model;
 
+/**
+ * VariantSelectList extension
+ */
 class VariantSelectList extends VariantSelectList_parent
 {
+    /**
+     * @var bool
+     */
     private bool $isEnriched = false;
 
     /**

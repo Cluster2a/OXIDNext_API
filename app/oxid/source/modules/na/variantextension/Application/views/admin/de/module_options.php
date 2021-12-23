@@ -9,6 +9,15 @@
  * @author             Alexander Hirschfeld <info@netadvising.de>
  * @link               https://www.netadvising.de
  */
+
 $aLang = array(
-    'NA_ARTICLE_VARIANT_COLORCODE' => 'Farbcode',
+    'NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_NAME' => 'Name Ausprägung',
+    'NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_VALUE' => 'Wert Ausprägung',
+    'NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_CONTENT_TYPE' => 'Typ',
+    'NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_CONTENT_TYPE_COLOR' => 'Farbe',
+    'NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_CONTENT_TYPE_IMAGE' => 'Bild',
+    'NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_COLOR_CODE' => 'Farbcode',
+    'NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_IMAGE' => 'Bild',
+    'NA_ARTICLE_VARIANT_BTN_ADD_EXTENSION' => 'Erweiterung hinzufügen',
+    'NA_ARTICLE_VARIANT_BTN_SAVE' => 'Erweiterung speichern'
 );

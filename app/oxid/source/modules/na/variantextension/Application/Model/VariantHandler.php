@@ -17,12 +17,25 @@ namespace NetAdvising\VariantExtension\Application\Model;
 
 use OxidEsales\Eshop\Application\Model\SimpleVariant;
 
+/**
+ * VariantHandler extension
+ */
 class VariantHandler extends VariantHandler_parent
 {
+    /**
+     * @var \OxidEsales\Eshop\Application\Model\Article|null
+     */
     private ?\OxidEsales\Eshop\Application\Model\Article $parent = null;
 
+    /**
+     * @var array|null
+     */
     private ?array $variantExtensions = null;
 
+    /**
+     * @param $varSelect
+     * @return bool
+     */
     private function varSelectExtensionExists($varSelect): bool
     {
         foreach ($this->variantExtensions as $extension) {
@@ -34,6 +47,11 @@ class VariantHandler extends VariantHandler_parent
         return false;
     }
 
+    /**
+     * @param $variantName
+     * @param $variantValue
+     * @return \stdClass|null
+     */
     private function getSelectExtension($variantName, $variantValue): ?\stdClass
     {
         foreach ($this->variantExtensions as $extension) {
@@ -45,6 +63,11 @@ class VariantHandler extends VariantHandler_parent
         return null;
     }
 
+    /**
+     * @param array $varSelects
+     * @param array $selections
+     * @return array
+     */
     private function enrichVariant(array $varSelects, array $selections): array
     {
         foreach ($varSelects as $idx => $varSelect) {

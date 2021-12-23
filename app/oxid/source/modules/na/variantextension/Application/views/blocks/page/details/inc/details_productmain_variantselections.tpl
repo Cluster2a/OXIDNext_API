@@ -2,6 +2,10 @@
     [{oxscript include="js/widgets/oxajax.min.js" priority=10 }]
     [{oxscript include="js/widgets/oxarticlevariant.min.js" priority=10 }]
     [{oxscript add="$( '#variants' ).oxArticleVariant();"}]
+
+    [{oxstyle include=$oViewConf->getModuleUrl('na/variantextension','out/src/css/variantextension.css')}]
+    [{oxscript include=$oViewConf->getModuleUrl('na/variantextension','out/src/js/variantextension.js') priority=10 }]
+    [{oxscript add="$( '#variants' ).oxPopOverOnVariantImage();"}]
     [{assign var="blCanBuy" value=$aVariantSelections.blPerfectFit}]
     [{if !$blHasActiveSelections}]
         [{if !$blCanBuy && !$oDetailsProduct->isParentNotBuyable()}]

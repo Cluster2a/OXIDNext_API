@@ -27,13 +27,13 @@ $sMetadataVersion = '2.0';
  */
 $aModule = [
     'id' => 'na/variantextension',
-    'title' => 'netAdvising variant extension',
-    'description' => '',
-    'thumbnail' => '/out/pictures/logo.png',
+    'title' => 'netAdvising Varianten-Erweiterung',
+    'description' => 'Dieses Modul erweitert Varianten um Farbcodes, Bilder und weitere Attribute.',
+    'thumbnail' => '/out/src/img/logo.png',
     'version' => '0.0.1',
     'author' => 'NetAdvising',
-    'url' => '',
-    'email' => '',
+    'url' => 'https://www.netadvising.de',
+    'email' => 'info@netadvising.de',
     'extend' => [
         ArticleVariant::class => \NetAdvising\VariantExtension\Application\Controller\Admin\ArticleVariant::class,
         \OxidEsales\Eshop\Application\Model\Article::class => \NetAdvising\VariantExtension\Application\Model\Article::class,
@@ -56,8 +56,6 @@ $aModule = [
             'block' => 'details_productmain_variantselections',
             'file' => 'Application/views/blocks/page/details/inc/details_productmain_variantselections.tpl'
         ]
-
-
     ],
     'settings' => [],
 ];
