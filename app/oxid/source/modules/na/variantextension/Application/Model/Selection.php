@@ -19,7 +19,7 @@ use NetAdvising\VariantExtension\Core\NaUtilsFile;
 use OxidEsales\Eshop\Core\Registry;
 
 /**
- *
+ * Selection extension
  */
 class Selection extends Selection_parent
 {

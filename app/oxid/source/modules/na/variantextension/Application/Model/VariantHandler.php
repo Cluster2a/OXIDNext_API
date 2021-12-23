@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace NetAdvising\VariantExtension\Application\Model;
 
 use OxidEsales\Eshop\Application\Model\SimpleVariant;
+use stdClass;
 
 /**
  * VariantHandler extension
@@ -50,9 +51,9 @@ class VariantHandler extends VariantHandler_parent
     /**
      * @param $variantName
      * @param $variantValue
-     * @return \stdClass|null
+     * @return stdClass|null
      */
-    private function getSelectExtension($variantName, $variantValue): ?\stdClass
+    private function getSelectExtension($variantName, $variantValue): ?stdClass
     {
         foreach ($this->variantExtensions as $extension) {
             if($extension->variantName === $variantName && $extension->variantValue === $variantValue) {

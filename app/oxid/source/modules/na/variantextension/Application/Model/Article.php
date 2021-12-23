@@ -16,7 +16,7 @@ declare(strict_types=1);
 namespace NetAdvising\VariantExtension\Application\Model;
 
 /**
- * article extension
+ * Article extension
  */
 class Article extends Article_parent
 {
@@ -25,14 +25,7 @@ class Article extends Article_parent
      */
     public function getVariantExtensionJSON(): string
     {
-        $variantExtension = $this->oxarticles__na_variantextension->rawValue;
-        if(is_null($variantExtension) !== true) {
-            $variantExtension = unserialize($variantExtension);
-        } else {
-            $variantExtension = [];
-        }
-
-        return json_encode($variantExtension);
+        return json_encode($this->getVariantExtension());
     }
 
     /**
@@ -41,12 +34,6 @@ class Article extends Article_parent
     public function getVariantExtension(): array
     {
         $variantExtension = $this->oxarticles__na_variantextension->rawValue;
-        if(is_null($variantExtension) !== true) {
-            $variantExtension = unserialize($variantExtension);
-        } else {
-            $variantExtension = [];
-        }
-
-        return $variantExtension;
+        return is_null($variantExtension) !== true ? unserialize($variantExtension) : [];
     }
 }
