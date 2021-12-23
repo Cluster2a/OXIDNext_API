@@ -35,7 +35,6 @@ class VariantSelectList extends VariantSelectList_parent
         return $this->isEnriched;
     }
 
-
     /**
      * Adds given variant info to current variant selection list
      *
@@ -54,7 +53,6 @@ class VariantSelectList extends VariantSelectList_parent
         $image = null
     )
     {
-
         if(empty($colorCode) !== true || empty($image) !== true) {
             $this->isEnriched = true;
         }

@@ -57,7 +57,6 @@
                         [{/foreach}]
                     </ul>
                 [{/if}]
-
             [{/if}]
         </div>
     </div>
