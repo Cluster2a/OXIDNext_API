@@ -15,9 +15,11 @@ $aLang = array(
     'NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_VALUE' => 'Wert Ausprägung',
     'NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_CONTENT_TYPE' => 'Typ',
     'NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_CONTENT_TYPE_COLOR' => 'Farbe',
+    'NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_COLOR_CODE_HELP' => 'Als Farbcode können alle gängigen Formate verwendet werden:<br><ul><li>Name (red)</li><li>HEX (#b71c1c)</li><li>RGB (rgb(183 28 28))</li><li>HSL (hsl(0deg 73% 41%))</li></ul>',
     'NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_CONTENT_TYPE_IMAGE' => 'Bild',
     'NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_COLOR_CODE' => 'Farbcode',
     'NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_IMAGE' => 'Bild',
     'NA_ARTICLE_VARIANT_BTN_ADD_EXTENSION' => 'Erweiterung hinzufügen',
-    'NA_ARTICLE_VARIANT_BTN_SAVE' => 'Erweiterung speichern'
+    'NA_ARTICLE_VARIANT_BTN_SAVE' => 'Erweiterungen speichern',
+    'NA_ARTICLE_VARIANT_BTN_ABORT' => 'Bearbeitung abbrechen'
 );

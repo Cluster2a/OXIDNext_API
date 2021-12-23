@@ -1,11 +1,42 @@
 [{$smarty.block.parent}]
-<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+[{oxscript include=$oViewConf->getModuleUrl('na/variantextension','out/src/js/alpinejs.min.js') priority=10 }]
+<style>
+    .btn-add {
+        background: #2196f3!important;
+        color: white!important;
+        border: 1px solid #2196f3!important;
+    }
 
+    .btn-add:hover {
+        background: #1976d2!important;
+    }
+
+    .btn-save {
+        background: #4caf50!important;
+        color: white!important;
+        border: 1px solid #4caf50!important;
+    }
+
+    .btn-save:hover {
+        background: #388e3c!important;
+    }
+
+    .btn-abort {
+        background: #e53935!important;
+        color: white!important;
+        border: 1px solid #e53935!important;
+    }
+
+    .btn-abort:hover {
+        background: #b71c1c!important;
+    }
+</style>
 <script>
     let content = [{$edit->getVariantExtensionJSON()}];
     const i18n = {
         NA_ARTICLE_VARIANT_BTN_ADD_EXTENSION: "[{oxmultilang ident="NA_ARTICLE_VARIANT_BTN_ADD_EXTENSION"}]",
         NA_ARTICLE_VARIANT_BTN_SAVE: "[{oxmultilang ident="NA_ARTICLE_VARIANT_BTN_SAVE"}]",
+        NA_ARTICLE_VARIANT_BTN_ABORT: "[{oxmultilang ident="NA_ARTICLE_VARIANT_BTN_ABORT"}]",
         NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_CONTENT_TYPE_COLOR: "[{oxmultilang ident="NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_CONTENT_TYPE_COLOR"}]",
         NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_CONTENT_TYPE_IMAGE: "[{oxmultilang ident="NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_CONTENT_TYPE_IMAGE"}]",
     };
@@ -14,11 +45,23 @@
     {
     });
 
+    const reloadData = async() => {
+        const form = document.querySelector('#variantExtensionReload');
+        const formData = new FormData(form);
+        return fetch(form.action, {
+            method: 'POST',
+            body: formData
+        }).then((response) => {
+            if (!response.ok) alert(`Something went wrong: ${response.status} - ${response.statusText}`)
+            return response.json()
+        })
+    }
+
     function addRemove() {
         return {
             data: [{$edit->getVariantExtensionJSON()}],
             i18n,
-            addNewField() {
+            addNewRecord() {
                 this.data.push({
                     id: this.data.length + 1,
                     variantName: '',
@@ -28,13 +71,16 @@
                     variantImage: '',
                 });
             },
-            removeField(id) {
+            removeRecord(id) {
                 this.data = this.data.filter(p => p.id !== id);
                 let i = 0;
                 this.data.forEach(function (record) {
                     record.id = i;
                     i++;
                 });
+            },
+            async reloadData() {
+                this.data = await reloadData();
             }
         }
     }
@@ -42,15 +88,15 @@
 
 <div x-cloak>
     <div x-data="addRemove()">
-        <form id="variantsDelete" name="variantExtension" action="[{$oViewConf->getSelfLink()}]" method="post">
+        <form id="variantExtensionReload" name="variantExtensionReload" action="[{$oViewConf->getSelfLink()}]" method="post">
             [{$oViewConf->getHiddenSid()}]
             <input type="hidden" name="cl" value="article_variant">
-            <input type="hidden" name="fnc" value="deleteSingleVariantExtension">
+            <input type="hidden" name="fnc" value="loadVariantExtensions">
             <input type="hidden" name="oxid" value="[{$oxid}]">
             <input type="hidden" name="voxid" value="[{$oxid}]">
         </form>
 
-        <form id="variantsUpload" name="variantExtension" action="[{$oViewConf->getSelfLink()}]" enctype="multipart/form-data" method="post">
+        <form id="variantExtensionMain" name="variantExtensionMain" action="[{$oViewConf->getSelfLink()}]" enctype="multipart/form-data" method="post">
             [{$oViewConf->getHiddenSid()}]
             <input type="hidden" name="cl" value="article_variant">
             <input type="hidden" name="fnc" value="saveVariantExtension">
@@ -59,26 +105,26 @@
             <input type="hidden" name="voxid" value="[{$oxid}]">
             <input type="hidden" name="oxparentid" value="[{$oxparentid}]">
 
-            <input type="button" :value="i18n.NA_ARTICLE_VARIANT_BTN_ADD_EXTENSION" @click.prevent="addNewField()">
+            <input type="button" class="btn-add" :value="i18n.NA_ARTICLE_VARIANT_BTN_ADD_EXTENSION" @click.prevent="addNewRecord()">
             <div class="table" style="display: table">
                 <table id="variantsUploadWrapper">
                     <tr>
                         <td class="listheader">[{oxmultilang ident="NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_NAME"}]</td>
                         <td class="listheader">[{oxmultilang ident="NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_VALUE"}]</td>
                         <td class="listheader">[{oxmultilang ident="NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_CONTENT_TYPE"}]</td>
-                        <td class="listheader">[{oxmultilang ident="NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_COLOR_CODE"}]</td>
+                        <td class="listheader">[{oxmultilang ident="NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_COLOR_CODE"}] [{oxinputhelp ident="NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_COLOR_CODE_HELP"}]</td>
                         <td class="listheader">[{oxmultilang ident="NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_IMAGE"}]</td>
                         <td class="listheader" colspan="2">&nbsp</td>
                     </tr>
                     <template x-for="(variantExtension, index) in data" :key="variantExtension.id">
                         <tr>
-                            <td>
+                            <td class="listitem">
                                 <input type="text" class="editinput" :value="variantExtension.variantName" :name="'variantName[' + variantExtension.id + ']'">
                             </td>
-                            <td>
+                            <td class="listitem">
                                 <input type="text" class="editinput" :value="variantExtension.variantValue" :name="'variantValue[' + variantExtension.id + ']'">
                             </td>
-                            <td>
+                            <td class="listitem">
                                 <label>
                                     <input type="radio" value="color" class="editinput" x-model="variantExtension.variantContentType" :name="'variantContentType[' + variantExtension.id + ']'">
                                     <span x-text="i18n.NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_CONTENT_TYPE_COLOR"></span>
@@ -88,22 +134,23 @@
                                     <span x-text="i18n.NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_CONTENT_TYPE_IMAGE"></span>
                                 </label>
                             </td>
-                            <td>
+                            <td class="listitem">
                                 <input type="text" class="editinput" :value="variantExtension.variantColorCode" :name="'variantColorCode[' + variantExtension.id + ']'">
                             </td>
-                            <td>
+                            <td class="listitem">
                                 <input type="text" class="editinput" :value="variantExtension.variantImage" :name="'variantImage[' + variantExtension.id + ']'">
                                 <input type="file" class="editinput" :name="'myfile[NA_VARINAT_IMAGES@varinat_image' + variantExtension.id + ']'">
                             </td>
-                            <td>
-                                <a href="#" class="delete" onmouseout="popDown('item_delete')" onmouseover="popUp(event,'item_delete');return true" @click.prevent="removeField(variantExtension.id);"></a>
+                            <td class="listitem">
+                                <a href="#" class="delete" onmouseout="popDown('item_delete')" onmouseover="popUp(event,'item_delete');return true" @click.prevent="removeRecord(variantExtension.id);"></a>
                             </td>
                         </tr>
                     </template>
                 </table>
             </div>
 
-            <input id="variantsUploadSubmit" type="submit" :value="i18n.NA_ARTICLE_VARIANT_BTN_SAVE">
+            <input class="btn-save" type="submit" :value="i18n.NA_ARTICLE_VARIANT_BTN_SAVE">
+            <input class="btn-abort" type="button" :value="i18n.NA_ARTICLE_VARIANT_BTN_ABORT" @click.prevent="reloadData()">
         </form>
     </div>
 </div>

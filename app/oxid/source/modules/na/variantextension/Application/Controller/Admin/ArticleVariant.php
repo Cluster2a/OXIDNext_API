@@ -74,6 +74,21 @@ class ArticleVariant extends ArticleVariant_parent
         }
     }
 
+    public function loadVariantExtensions()
+    {
+        $sOXID = Registry::getRequest()->getRequestEscapedParameter("voxid");
+
+        /** @var Article $oArticle */
+        $oArticle = oxNew(Article::class);
+
+        if ($sOXID != "-1") {
+            $oArticle->loadInLang($this->_iEditLang, $sOXID);
+
+            $currentVariantExtensions = $oArticle->getVariantExtensionJSON();
+            Registry::getUtils()->showMessageAndExit($currentVariantExtensions);
+        }
+    }
+
     /**
      * @param array $variantExtensions
      * @return void
