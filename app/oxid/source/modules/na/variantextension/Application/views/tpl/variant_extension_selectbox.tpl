@@ -1,6 +1,6 @@
 [{assign var="oSelections" value=$oSelectionList->getSelections()}]
 [{if $oSelections}]
-    <div class="form-group mb-0 dropDown">
+    <div class="form-group dropDown">
         [{if !$blHideLabel}]
             <p class="variant-label"><strong>[{$oSelectionList->getLabel()}][{oxmultilang ident="COLON"}]</strong></p>
         [{/if}]
@@ -8,6 +8,7 @@
             [{assign var="oActiveSelection" value=$oSelectionList->getActiveSelection()}]
             [{if $oSelectionList->isEnriched() !== true}]
                 <button type="button" class="btn btn-outline-dark btn-sm dropdown-toggle" data-toggle="dropdown">
+                    [{assign var="oActiveSelection" value=$oSelectionList->getActiveSelection()}]
                     [{if $oActiveSelection}]
                         <span class="float-left">[{$oActiveSelection->getName()}]</span>
                     [{elseif !$blHideDefault}]
@@ -28,11 +29,11 @@
                     [{* ICONS MARKUP *}]
                     <ul class="d-inline-flex mb-0 pl-0 [{$sJsAction}][{if $sFieldName != "sel"}] vardrop[{/if}]" role="menu">
                         [{foreach from=$oSelections item=oSelection}]
-                            <a class="m-3" href="[{$oSelection->getLink()}]" data-selection-id="[{$oSelection->getValue()}]">
+                            <a class="mx-3 mt-2 mb-0[{if $oSelection->isDisabled()}] disabled js-disabled[{/if}]" title="[{$oSelection->getName()}]" href="[{$oSelection->getLink()}]" data-selection-id="[{$oSelection->getValue()}]">
                                 [{if $oSelection->getType() === 'color'}]
                                     <span style="background-color: [{$oSelection->getColorCode()}];[{if $oSelection->isActive()}] box-shadow: 0 0 0 2px #fff, 0 0 0 calc(3px + 2px) [{$oSelection->getColorCode()}], 0 0 #0000;[{/if}]" class="color-picker[{if $oSelection->isActive()}] active[{/if}] [{if $oSelection->isDisabled()}] disabled js-disabled[{/if}]"></span>
                                 [{else}]
-                                    <img width="40" height="40" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="<img src='[{$oSelection->getImage()}]'>" class="variant-image[{if $oSelection->isActive()}] active[{/if}]" alt="[{$oSelection->getName()}]" src="[{$oSelection->getImage()}]">
+                                    <img width="40" height="40" data-toggle="popover" data-placement="bottom" data-trigger="hover" title="[{$oSelection->getName()}]" data-content="<img src='[{$oSelection->getImage()}]'>" class="variant-image[{if $oSelection->isActive()}] active[{/if}]" alt="[{$oSelection->getName()}]" src="[{$oSelection->getImage()}]">
                                 [{/if}]
                             </a>
                         [{/foreach}]

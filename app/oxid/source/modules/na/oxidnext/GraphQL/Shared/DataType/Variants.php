@@ -35,6 +35,12 @@ final class Variants
     private array $list;
 
     /**
+     * @var bool
+     */
+    private bool $isEnriched;
+
+
+    /**
      * @var ?VariantListDataType
      */
     private ?VariantListDataType $activeSelection;
@@ -42,12 +48,14 @@ final class Variants
     public function __construct(
         string               $label,
         array                $list,
-        ?VariantListDataType $activeSelection
+        ?VariantListDataType $activeSelection,
+        bool                 $isEnriched
     )
     {
         $this->label = $label;
         $this->list = $list;
         $this->activeSelection = $activeSelection;
+        $this->isEnriched = $isEnriched;
     }
 
     /**
@@ -75,4 +83,13 @@ final class Variants
     {
         return $this->activeSelection;
     }
+
+    /**
+     * @Field()
+     */
+    public function getIsEnriched(): bool
+    {
+        return $this->isEnriched;
+    }
+
 }

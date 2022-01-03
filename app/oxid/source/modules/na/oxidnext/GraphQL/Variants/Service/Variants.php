@@ -53,7 +53,10 @@ class Variants
                     $selection->getName(),
                     $selection->getValue(),
                     $selection->isActive() === true,
-                    $selection->isDisabled() === true
+                    $selection->isDisabled() === true,
+                    method_exists($selection, 'getType') ? $selection->getType() : null,
+                    method_exists($selection, 'getColorCode') ? $selection->getColorCode() : null,
+                    method_exists($selection, 'getImage') ? $selection->getImage() : null
                 );
             }
 
@@ -63,14 +66,18 @@ class Variants
                     $activeSelection->getName(),
                     $activeSelection->getValue(),
                     $activeSelection->isActive() === true,
-                    $activeSelection->isDisabled() === true
+                    $activeSelection->isDisabled() === true,
+                    method_exists($activeSelection, 'getType') ? $activeSelection->getType() : null,
+                    method_exists($activeSelection, 'getColorCode') ? $activeSelection->getColorCode() : null,
+                    method_exists($activeSelection, 'getImage') ? $activeSelection->getImage() : null
                 );
             }
 
             $variantSelection[] = new VariantsDataType(
                 $variant->getLabel(),
                 $list,
-                $activeSelection
+                $activeSelection,
+                method_exists($variant, 'isEnriched') ? $variant->isEnriched() : false
             );
         }
 

@@ -43,18 +43,38 @@ final class VariantList
      */
     private bool $disabled;
 
+    /**
+     * @var ?string
+     */
+    private ?string $type;
+
+    /**
+     * @var ?string
+     */
+    private ?string $colorCode;
+
+    /**
+     * @var ?string
+     */
+    private ?string $image;
 
     public function __construct(
         string $name,
         string $value,
         bool   $active,
-        bool   $disabled
+        bool   $disabled,
+        ?string $type,
+        ?string $colorCode,
+        ?string $image
     )
     {
         $this->name = $name;
         $this->value = $value;
         $this->active = $active;
         $this->disabled = $disabled;
+        $this->type = $type;
+        $this->colorCode = $colorCode;
+        $this->image = $image;
     }
 
     /**
@@ -87,5 +107,29 @@ final class VariantList
     public function getDisabled(): bool
     {
         return $this->disabled;
+    }
+
+    /**
+     * @Field()
+     */
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @Field()
+     */
+    public function getColorCode(): ?string
+    {
+        return $this->colorCode;
+    }
+
+    /**
+     * @Field()
+     */
+    public function getImage(): ?string
+    {
+        return $this->image;
     }
 }
