@@ -1,6 +1,10 @@
 [{$smarty.block.parent}]
 [{oxscript include=$oViewConf->getModuleUrl('na/variantextension','out/src/js/alpinejs.min.js') priority=10 }]
 <style>
+    .sorting {
+        font-size: 15px;
+    }
+
     .btn-add {
         background: #2196f3!important;
         color: white!important;
@@ -61,23 +65,60 @@
         return {
             data: [{$edit->getVariantExtensionJSON()}],
             i18n,
+            refreshIndex() {
+                let i = 0;
+                this.data.forEach(function (record) {
+                    record.id = i;
+                    i++;
+                });
+            },
             addNewRecord() {
+                const newId = this.data.length;
                 this.data.push({
-                    id: this.data.length + 1,
+                    id: newId,
                     variantName: '',
                     variantValue: '',
                     variantContentType: '',
                     variantColorCode: '',
                     variantImage: '',
                 });
+                this.refreshIndex();
             },
             removeRecord(id) {
                 this.data = this.data.filter(p => p.id !== id);
-                let i = 0;
-                this.data.forEach(function (record) {
-                    record.id = i;
-                    i++;
-                });
+                this.refreshIndex();
+            },
+            moveDown(id) {
+                let newData = []
+
+                for (let index = 0; index < this.data.length; index++) {
+                    let element = this.data[index];
+                    if(element.id === id + 1) {
+                        element = this.data.filter(p => p.id === id)[0];
+                    } else if(element.id === id ) {
+                        element = this.data.filter(p => p.id === id + 1)[0];
+                    }
+                    newData = [...newData, element]
+                }
+
+                this.data = newData;
+                this.refreshIndex();
+            },
+            moveUp(id) {
+                let newData = []
+
+                for (let index = 0; index < this.data.length; index++) {
+                    let element = this.data[index];
+                    if(element.id === id - 1) {
+                        element = this.data.filter(p => p.id === id)[0];
+                    } else if(element.id === id ) {
+                        element = this.data.filter(p => p.id === id - 1)[0];
+                    }
+                    newData = [...newData, element]
+                }
+
+                this.data = newData;
+                this.refreshIndex();
             },
             async reloadData() {
                 this.data = await reloadData();
@@ -109,6 +150,7 @@
             <div class="table" style="display: table">
                 <table id="variantsUploadWrapper">
                     <tr>
+                        <td class="listheader">&nbsp</td>
                         <td class="listheader">[{oxmultilang ident="NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_NAME"}]</td>
                         <td class="listheader">[{oxmultilang ident="NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_VALUE"}]</td>
                         <td class="listheader">[{oxmultilang ident="NA_ARTICLE_VARIANT_TABLE_HEADER_VARIANT_CONTENT_TYPE"}]</td>
@@ -119,10 +161,14 @@
                     <template x-for="(variantExtension, index) in data" :key="variantExtension.id">
                         <tr>
                             <td class="listitem">
-                                <input type="text" class="editinput" :value="variantExtension.variantName" :name="'variantName[' + variantExtension.id + ']'">
+                                <input type="button" class="edittext sorting" value="&#9650;" @click.prevent="moveUp(variantExtension.id);" x-bind:disabled="variantExtension.id === 0">
+                                <input type="button" class="edittext sorting" value="&#9660;" @click.prevent="moveDown(variantExtension.id);" x-bind:disabled="variantExtension.id === data.length - 1">
                             </td>
                             <td class="listitem">
-                                <input type="text" class="editinput" :value="variantExtension.variantValue" :name="'variantValue[' + variantExtension.id + ']'">
+                                <input type="text" class="editinput" x-model="variantExtension.variantName" :name="'variantName[' + variantExtension.id + ']'">
+                            </td>
+                            <td class="listitem">
+                                <input type="text" class="editinput" x-model="variantExtension.variantValue" :name="'variantValue[' + variantExtension.id + ']'">
                             </td>
                             <td class="listitem">
                                 <label>
@@ -135,10 +181,10 @@
                                 </label>
                             </td>
                             <td class="listitem">
-                                <input type="text" class="editinput" :value="variantExtension.variantColorCode" :name="'variantColorCode[' + variantExtension.id + ']'">
+                                <input type="text" class="editinput" x-model="variantExtension.variantColorCode" :name="'variantColorCode[' + variantExtension.id + ']'">
                             </td>
                             <td class="listitem">
-                                <input type="text" class="editinput" :value="variantExtension.variantImage" :name="'variantImage[' + variantExtension.id + ']'">
+                                <input type="text" class="editinput" x-model="variantExtension.variantImage" :name="'variantImage[' + variantExtension.id + ']'">
                                 <input type="file" class="editinput" :name="'myfile[NA_VARINAT_IMAGES@varinat_image' + variantExtension.id + ']'">
                             </td>
                             <td class="listitem">
