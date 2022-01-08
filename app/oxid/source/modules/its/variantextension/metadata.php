@@ -20,6 +20,8 @@ use OxidEsales\Eshop\Application\Controller\Admin\ArticleVariant;
 use OxidEsales\Eshop\Application\Model\Selection;
 use OxidEsales\Eshop\Application\Model\VariantSelectList;
 
+$style = '<style>.its-img {display:none;} .listitemfloating .its-img {display: block; position: absolute; top: -5px; left: -8px; height: 20px; margin: 2px;} .listitemfloating span {padding-left: 15px;} </style>';
+
 $sMetadataVersion = '2.0';
 
 /**
@@ -27,7 +29,7 @@ $sMetadataVersion = '2.0';
  */
 $aModule = [
     'id' => 'its/variantextension',
-    'title' => 'ITSOUP Varianten-Erweiterung',
+    'title'       => $style . '<span style="position: relative;"><img class="its-img" src="../out/modules/its/variantextension/out/src/img/soup.png" alt="ITSOUP Varianten-Erweiterung" title="ITSOUP Varianten-Erweiterung">ITSOUP Varianten-Erweiterung</span>',
     'description' => 'Dieses Modul erweitert Varianten um Farbcodes und Bilder.',
     'thumbnail' => '/out/src/img/logo.png',
     'version' => '0.0.1',

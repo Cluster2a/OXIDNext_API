@@ -21,7 +21,8 @@
     "oxid-esales/graphql-base": "dev-master",
     "oxid-esales/graphql-storefront": "dev-master",
     "netadvising/oxidnext":"v1.0.1",
-    "itsoup/variantextension":"v0.0.1"
+    "itsoup/variantextension":"v0.0.1",
+    "itsoup/ajaxbasket":"v0.0.1"
   },
   "require-dev": {
     "incenteev/composer-parameter-handler": "^v2.1.4",

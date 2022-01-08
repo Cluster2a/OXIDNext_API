@@ -1,0 +1,17 @@
+{
+  "name": "itsoup/ajaxbasket",
+  "description": "Ajax Basket",
+  "type": "itsoup-module",
+  "version": "v0.0.1",
+  "keywords": ["OXID", "modules", "tutorial", "Ajax", "basket"],
+  "homepage": "https://wwww.itsoup.de",
+  "license": [
+    "GPL-3.0-only",
+    "proprietary"
+  ],
+  "autoload": {
+    "psr-4": {
+      "ITSOUP\\AjaxBasket\\": "../../../source/modules/its/ajaxbasket"
+    }
+  }
+}
