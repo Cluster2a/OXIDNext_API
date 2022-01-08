@@ -9,6 +9,10 @@
     "netadvising": {
       "type": "path",
       "url": "source/modules/na/*"
+    },
+    "itsoup": {
+      "type": "path",
+      "url": "source/modules/its/*"
     }
   },
   "minimum-stability": "dev",
@@ -17,7 +21,7 @@
     "oxid-esales/graphql-base": "dev-master",
     "oxid-esales/graphql-storefront": "dev-master",
     "netadvising/oxidnext":"v1.0.1",
-    "netadvising/variantextension":"v0.0.1"
+    "itsoup/variantextension":"v0.0.1"
   },
   "require-dev": {
     "incenteev/composer-parameter-handler": "^v2.1.4",

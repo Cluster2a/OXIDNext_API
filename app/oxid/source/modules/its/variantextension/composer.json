@@ -1,0 +1,24 @@
+{
+  "name": "itsoup/variantextension",
+  "description": "",
+  "type": "itsoup-module",
+  "version": "v0.0.1",
+  "keywords": [
+    "oxid",
+    "modules",
+    "eShop",
+    "variants",
+    "images"
+  ],
+  "license": [
+    "GPL-3.0"
+  ],
+  "require": {
+    "php": "^7.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "ITSOUP\\VariantExtension\\": "../../../source/modules/its/variantextension"
+    }
+  }
+}

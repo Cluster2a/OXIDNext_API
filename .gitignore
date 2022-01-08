@@ -71,3 +71,5 @@ node_modules/
 /app/oxid/source/modules/functions.php
 !/app/oxid/source/modules/na/
 /app/oxid/source/modules/na/*/vendor/
+!/app/oxid/source/modules/its/
+/app/oxid/source/modules/its/*/vendor/

@@ -1,0 +1,4 @@
+name: Variant extension module migration (its/variantextension)
+migrations_namespace: ITSOUP\VariantExtension\Migrations
+table_name: oxmigrations_variantextension
+migrations_directory: data
