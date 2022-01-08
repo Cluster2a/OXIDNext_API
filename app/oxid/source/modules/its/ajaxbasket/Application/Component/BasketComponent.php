@@ -19,6 +19,7 @@ use OxidEsales\Eshop\Application\Component\Widget\ArticleDetails;
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\ViewConfig;
+use Psr\Log\LoggerInterface;
 use stdClass;
 
 class BasketComponent extends BasketComponent_parent
@@ -68,19 +69,19 @@ class BasketComponent extends BasketComponent_parent
         }
 
         // adding to basket is not allowed ?
-        $myConfig = $this->getConfig();
-        if (Registry::getUtils()->isSearchEngine()) {
+        $myConfig = \OxidEsales\Eshop\Core\Registry::getConfig();
+        if (\OxidEsales\Eshop\Core\Registry::getUtils()->isSearchEngine()) {
             return;
         }
 
         // adding articles
-        if ($aProducts = $this->_getItems($sProductId, $dAmount, $aSel, $aPersParam, $blOverride)) {
-            $this->_setLastCallFnc('tobasket');
+        if ($aProducts = $this->getItems($sProductId, $dAmount, $aSel, $aPersParam, $blOverride)) {
+            $this->setLastCallFnc('tobasket');
 
             $database = \OxidEsales\Eshop\Core\DatabaseProvider::getDb();
             $database->startTransaction();
             try {
-                $oBasketItem = $this->_addItems($aProducts);
+                $oBasketItem = $this->addItems($aProducts);
                 //reserve active basket
                 if (Registry::getConfig()->getConfigParam('blPsBasketReservationEnabled')) {
                     $basket = Registry::getSession()->getBasket();
@@ -105,14 +106,14 @@ class BasketComponent extends BasketComponent_parent
                 Registry::getSession()->setVariable('_newitem', $oNewItem);
             }
 
+            // redirect to basket
+            $redirectUrl = $this->getRedirectUrl();
+            $this->dispatchEvent(new \OxidEsales\EshopCommunity\Internal\Transition\ShopEvents\BasketChangedEvent($this));
+
             // nA - AjaxBasket - AH - 2019/05/25 -> BEGIN
             $sItemId = key($aProducts);
             $this->sendAjaxResponse($sItemId);
             // nA - AjaxBasket - AH - 2019/05/25 <- END
-
-            // redirect to basket
-            $redirectUrl = $this->_getRedirectUrl();
-            $this->dispatchEvent(new \OxidEsales\EshopCommunity\Internal\Transition\ShopEvents\BasketChangedEvent($this));
 
             return $redirectUrl;
         }
@@ -143,12 +144,12 @@ class BasketComponent extends BasketComponent_parent
                 $htmlContentModal = $oSmarty->fetch($this->_itemAddedToBasketTemplate);
             }
 
-            $oBasket = $this->getSession()->getBasket();
-            $oBasket->calculateBasket();
+            $basket = Registry::getSession()->getBasket();
+            $basket->calculateBasket();
             //take params
-            $iBasketItemsAmount = $oBasket->getItemsCount();
+            $iBasketItemsAmount = $basket->getItemsCount();
 
-            $oSmarty->assign("oxcmp_basket", $oBasket);
+            $oSmarty->assign("oxcmp_basket", $basket);
 
             $oxViewConfig = oxNew(ViewConfig::class);
             $oSmarty->assign("oViewConf", $oxViewConfig);

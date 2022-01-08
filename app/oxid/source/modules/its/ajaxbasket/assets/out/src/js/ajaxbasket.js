@@ -182,8 +182,8 @@ let its_oxAddToBasket = {
             additionalData: addData,
             onSuccess: function (data) {
                 if (data.success === true) {
-                    a("div#naItemAddedModal").find("div#naItemAddedModalinnerBody").html(data.contentModal);
-                    a("div#naItemAddedModal").modal("show");
+                    a("div#itsItemAddedModal").find("div#itsItemAddedModalinnerBody").html(data.contentModal);
+                    a("div#itsItemAddedModal").modal("show");
                     a("span#basketCounter").text(data.itemAmount);
 
                     let $contents = $('a.fixed-header-link').first().contents();

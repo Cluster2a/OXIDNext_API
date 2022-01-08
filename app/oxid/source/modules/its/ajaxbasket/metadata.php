@@ -41,8 +41,8 @@ $aModule = [
     ],
     'controllers' => [],
     'templates'   => [
-        'na_item_added_to_basket_modal.tpl'			=> 'Application/views/blocks/its_item_added_to_basket_modal.tpl',
-        'na_item_added_to_basket_minibasket.tpl'	=> 'Application/views/blocks/its_item_added_to_basket_minibasket.tpl',
+        'its_item_added_to_basket_modal.tpl'		=> 'Application/views/blocks/its_item_added_to_basket_modal.tpl',
+        'its_item_added_to_basket_minibasket.tpl'	=> 'Application/views/blocks/its_item_added_to_basket_minibasket.tpl',
     ],
     'events'      => [],
     'blocks'      => [

@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div id="naItemAddedModalinnerBody" class="basketFlyout"></div>
+                <div id="itsItemAddedModalinnerBody" class="basketFlyout"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">[{oxmultilang ident="DD_MINIBASKET_CONTINUE_SHOPPING"}]</button>
