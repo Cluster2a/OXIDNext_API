@@ -32,7 +32,7 @@ $aModule = [
         'en' => 'Add articles to basket via ajax.',
     ],
     'thumbnail'   => '/out/src/img/logo.png',
-    'version' => '0.0.1',
+    'version'     => '0.0.1',
     'author'      => 'ITSOUP',
     'url'         => 'https://www.itsoup.de',
     'email'       => 'info@itsoup.de',

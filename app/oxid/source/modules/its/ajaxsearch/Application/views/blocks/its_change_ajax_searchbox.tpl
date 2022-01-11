@@ -1,0 +1,2 @@
+<input class="form-control" type="text" id="searchParam" name="searchparam" value="[{$oView->getSearchParamForHtml()}]" placeholder="[{oxmultilang ident="SEARCH"}]" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" >
+[{oxscript add="$('input[name=\"searchparam\"]').its_oxSearchItem();"}]

@@ -3,7 +3,7 @@
   "description": "Ajax Basket",
   "type": "itsoup-module",
   "version": "v0.0.1",
-  "keywords": ["OXID", "modules", "tutorial", "Ajax", "basket"],
+  "keywords": ["OXID", "modules", "Ajax", "basket"],
   "homepage": "https://wwww.itsoup.de",
   "license": [
     "GPL-3.0-only",
